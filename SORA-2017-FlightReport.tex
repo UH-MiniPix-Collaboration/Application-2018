@@ -1,0 +1,51 @@
+\documentclass[aps,superscriptaddress,floatfix,nofootinbib,showpacs,amsmath,amssymb,altaffilletter,floatfix,linenumbers]{revtex4-1}
+%---
+\input{def.tex}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+%\linespread{0.9}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rfoot{\thepage}
+\pagestyle{fancy}
+%\linespread{0}
+\renewcommand{\thepage}{}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+%\nolinenumbers
+%---
+\begin{document}
+%---
+\title{SORA}
+
+\begin{abstract}
+\begin{center}
+{\bf Abstract}
+\end{center}
+The SORA payload sampled for the existence of microorganisms and bacterial spores in the upper atmosphere. The payload analyzed different aspects of the surrounding environment such as radiation exposure, temperature, pressure and humidity. The payload had three main scientific objectives. First, design and build a novel system that will isolate surrounding air and sample for cells. Second, onboard sensors will analyze exposure to solar and cosmic radiation that microorganisms may encounter. Finally, monitor the environmental conditions such as temperature, pressure, and humidity. Furthermore, the design employed additive manufacturing and hobby electronics in its construction to provide an accessible basis for future missions and explore the bounds of the technology available.
+\end{abstract}
+
+\input{authors.tex}
+\setlength{\parindent}{1em}
+\setdefaultleftmargin{1em}{1em}{}{}{}{}
+%---
+\setcounter{page}{0}\thispagestyle{empty}
+%---
+\maketitle
+\tableofcontents
+\setcounter{page}{0}\thispagestyle{empty}
+\newpage
+%---
+Section: Introduction
+\input{Introduction.tex}
+%Section: Hardware Description
+\input{Hardware.tex}
+%Section: Flight Conditions and Environmental Data
+\input{Flight.tex}
+
+%
+\clearpage
+\bibliographystyle{SORA}
+\bibliography{SORA}
+\end{document}
