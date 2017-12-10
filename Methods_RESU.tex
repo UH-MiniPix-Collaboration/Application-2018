@@ -1,0 +1,106 @@
+%\clearpage
+\subsection{RESU Methods}
+\label{sec:RESU}
+
+
+\subsubsection{Overview}
+
+RESU took charge of many components that worked in tandem to accurately describe the flight mission through data.  As mentioned briefly before, the sensors would transmit their readings to the RP3 via serial USB.  The RP3 would then take those strings and write them to a CSV file that corresponded to that sensor.  The data strings were timestamped using the Arduino's RTC sensor.  Setting up the sensors for data collection was a big task since there were a lot of components that needed to be tailored for our needs.  The biggest challenge was keeping the power consumption within bounds while running all three experiments.  Handling telemetry was also paramount to the success of this mission.
+
+\subsubsection{The Sensors}
+
+Each sensor would either be digital or analog in nature.  Digital sensors typically provide digital filtering, however, the analog ones do not.  The biggest challenge with that was concerning temperature compensation.  That is where analog sensors prevailed.  All in all, the sensor's data in RESU were digitally filtered to ensure readability in graphs for future data analyzing.  Many of the devices within  the structure are electronic and can only operate within a certain temperature range.
+   
+To mitigate the risk of component failure due to overheating or a decrease in temperature, the temperature sensors were placed on the pump, electronics bay, and MiniPIX, helping determine if the heaters needed to be switched on or off.  In the case of overheating, the sensors would be used to determine whether the pumps must be shut off.  These sensors operate in the \SIrange{-40}{125}{\celsius} range and draw less than \SI{0.5}{\micro\ampere} of current, each.  Temperature readings were recorded every \SIrange{3}{4}{\second}.
+
+A pressure sensor was placed inside the electronics container to monitor the pressure levels within the payload.  The sensor operates in the \SIrange{0}{14}{\bara} range, within a temperature range of \SIrange{-40}{85}{\celsius}, and draws \SI{1}{\micro\ampere} of current.  The pressure was measured in the \SIrange{0}{14000}{\milli\bara} range, at a resolution of \SI{1}{\milli\bara} every \SIrange{3}{4}{\second}.
+
+One humidity sensor was placed inside at the electronics plate.  The sensor operates in a range of \SIrange{0}{100}{\percent} relative humidity and draws \SI{200}{\micro\ampere} of current.  Humidity was measured at a resolution of \SI{5}{\percent} every \SIrange{3}{4}{\second}.
+
+The location sensor operates in the \SIrange{-40}{85}{\celsius} range and draws \SI{16}{\milli\ampere} of current.  This sensor also provided a count for the number of satellites it encountered during flight.  Data was  recorded ever \SIrange{3}{4}{\second}. 
+ 
+The Real-Time Clock (RTC) recorded time in a $HH$:$MM$:$SS$ and $MM/DD/YYYY$ format.  The sensor operates in the \SIrange{-40}{85}{\celsius} range and consumed \SIrange{400}{500}{\micro\ampere} of current.  These timestamps  were used for log when a specific data point was collected by each sensor in the Arduino.  The RP3  used an RTC to help log for both the temperatures of the MiniPIX and RP3 respectfully.
+
+The inertial measuring unit (IMU) was a combination sensor that reported orientation information.  It operates in a \SIrange{-40}{125}{\celsius} range and consumed \SI{450}{\micro\ampere}, \SI{3.2}{\milli\ampere}, and \SI{280}{\micro\ampere} of current, for the accelerometer, gyroscope, and magnetometer, respectively.  It uses the best qualities of each sensor to compliment the flaws in data acquisition over long time frames.  Data was collected every\SIrange{5}{7}{\second}.
+ 
+ UVC radiation was measured by three identical sensors.  They supported light ranging from \SIrange{210}{380}{\watt\per\square\meter} and were located outside the roof of the payload.  These sensors were analog so their readings were voltages induced by incident rays on the surface of each sensor. To stabilize the voltage readings from each sensor, a \SI{3300}{\micro\farad} capacitor was placed across the ground and analog out pins of the sensor.  Data was collected every \SIrange{3}{4}{\second}.
+
+
+\subsubsection{Powering It All Up}
+
+In order to stay within the power constraints, a robust power supply was needed that could handle all the components of the payload.  The power supply we used was the PPM-DC-ATX-P by WinSystems INC.  It offered the desired number of \SI{+5}{\volt} and \SI{+12}{\volt} outputs needed to power the payload's electronics.  This power supply could effectively take \SI{+30}{\volt} and step it down to two \SI{+12}{\volt} and two \SI{+5 }{\volt} outputs.  One of the \SI{+12}{\volt} outputs went to the Arduino since it can step down to the appropriate voltages internally while the other went to a PWM motor for the solenoid.  One of the \SI{+5 }{\volt} outputs powered two analog sensors that were sent to HASP through the EDAC connection (more on that in the next sections).  The remaining \SI{+5 }{\volt} output was converted to a USB power cable for the RP3.  The power supply also gave four ground outputs that were used by each respective component. 
+
+\subsubsection{Uplink Commands: Relay System for Pumps and Heaters}
+
+When a command was received from the mission control team, it was transmitted straight through the DB9 connection into the Arduino which either accepted or declined it based on our state machine.  If accepted, the state machine would then interpret which hexadecimal command was sent and would then send a logical HIGH pulse to the relay which subsequently turned a system on or off.  Table~\ref{tab:All-Commands} lists all the commands used during flight.
+
+\begin{table}[!ht]
+\centering
+\caption{Table of All Uplink Commands Used During Flight} 
+\label{tab:All-Commands}
+\bigskip
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\bfseries Command} & \multicolumn{1}{c|}{\bfseries HEX Uplink Command} &  \multicolumn{1}{c|}{\bfseries ASCII Uplink Command} & \multicolumn{1}{c|}{\bfseries Expected Current Consumption} \\
+\hline
+    Pump On     	& 0x65FF 	& e	 & \SI{0.96}{\ampere}   \\ \hline
+    Pump Off    	& 0x71FF 	& q	 & \SI{0.29}{\ampere}    \\ \hline
+    Heaters On  	& 0x68FF 	& h	 & \SI{0.47}{\ampere}    \\ \hline    
+    Heaters Off 	& 0x76FF 	& v	 & \SI{0.29}{\ampere}    \\ \hline
+\end{tabular}
+\medskip
+\end{table}
+
+Serial uplink commands allow for 4-byte hexadecimal strings.  Since none of our processes require more than a single parameter, we elected to leave the second parameter as 0xFF.  Note that every ``disengage'' resulted in our payload returning to nominal current which was about \SI{0.29}{\ampere}.  The ``pump on'' command executed a sequence of events. After receiving the command, a normally closed solenoid would open and then after one second the pump would begin the collection process.  The solenoid does have an initial peak current of \SI{1.2}{\ampere} and to suppress it, a punch-and-hold circuit was implemented using a Pololu G2 High Power Motor Driver.  It served the purpose of reducing  the current consumption from the solenoid to stay within the power budget.  The heaters were there to make sure the pumps could turn on in the extreme cold temperatures.  
+
+\subsubsection{Interfacing with HASP: EDAC and DB9 Connections}
+
+From the EDAC pins, we joined two of the \SI{30}{\volt} leads together in parallel to supply power to the central power supply.  Likewise, two of the ground leads were used to ground the supply.  A pair of \SI{30}{\volt} and ground leads were also used as input to the relay circuit in order to supply power to the pumps which required at least \SI{24}{\volt} to operate.  The last pair of \SI{30}{\volt} and ground leads were used as input to the punch and hold circuit mentioned in the previous section to power the solenoid which required at least \SI{20}{\volt} to operate.  Two temperature sensors were connected by both analog leads from the EDAC connection.  The corresponding ground pins were used to ground them.  These two sensors were placed on the pump and the outside of the payload respectfully.  None of the discrete channels were used because serial uplink and downlink operations were more preferable for our mission.
+
+As for the DB9 connection, we used it to send serial uplink and downlink commands to better our flight operation, as well as to ensure the best possible experiment takes place while at float.  The Tx and Rx leads were connected to the Arduino which then read in the serial signal for reading and writing.  Each uplink command was verified by a state machine that processed each string of \num{32} bits.  A Maxim 232 integrated circuit was put in between the transmission and receiving leads to and from the Arduino which handled the input of the serial communication, ensuring proper integration with HASP voltages and Arduino voltages.  The baud rate for serial communication was set to 4800 bits per second ($bits/sec$). Listing~\ref{Downlinks} is a sample downlink data packet received during flight.
+
+\lstset{basicstyle=\small, numbers=left, xleftmargin=2em, frame=tb, label = Downlinks, framexleftmargin=1.5em}
+\begin{lstlisting}[caption = Sample of downlinked data packets ID: 15667 - 15670.]
+...
+begin_packet
+15667,-21.05,-0.33,35.62,-1.00,0.12,0.25,-0.71,0.63,9.30,-30.25,-26.69,-60.88
+3.14,2.86,0.00,0.00,0.60,9:29:39 9/4/17
+end_packet
+begin_packet
+15668,-20.95,-0.54,35.62,0.75,0.06,-0.69,0.25,-2.00,9.67,-28.37,-28.06,-60.06
+3.80,3.33,0.00,0.00,0.60,9:29:42 9/4/17
+end_packet
+begin_packet
+15669,-21.15,-0.54,35.62,0.81,-0.06,-0.56,1.22,-2.13,9.86,-29.56,-27.75,-57.88
+1.86,2.86,0.01,0.02,0.61,9:29:45 9/4/17
+end_packet
+begin_packet
+15670,-21.15,-0.54,35.62,-1.00,0.00,0.12,-0.55,0.73,9.37,-27.37,-30.00,-58.75
+1.86,3.96,0.00,0.00,0.61,9:29:48 9/4/17
+end_packet
+...
+\end{lstlisting}
+\medskip
+
+Each packet of data delimited by keywords \verb|begin_packet| and \verb|end_packet| so that parsing each file would be easier.  During flight, these data packets were crucial status updates to the state of our payload.  From them, we were able to determine when to engage/disengage the heaters and other payload systems.
+
+Data packets contained information about the readings from each sensor.  The first integer represents the ID of the packet which by the end of flight was a total of 16,147 packets.  Following the packet ID is the three temperature readings, gyroscope $x, y, z$ values, accelerometer $x, y, z$ values, magnetometer $x, y, z$ values, pressure readings, humidity readings, UV \#1, \#2, \#3 voltage readings, and finally the timestamp in $HH$:$MM$:$SS$ $MM$/$DD$/$YY$ at which the packet was written.  
+
+In addition to downlinking sensor data, we also elected to downlink serial uplink commands as shown in listing \ref{Uplinks}.  
+
+\lstset{basicstyle=\small, numbers=left, frame=tb, linewidth=11.5cm, xleftmargin=.4\textwidth, label = Uplinks}
+\begin{lstlisting}[caption = Sample of received uplink commands in downlinked packets]
+...
+1
+2
+71
+FFFFFFFF
+3
+D
+A
+Received Command: 71
+...
+\end{lstlisting}
+\medskip
+
+Each line within a received uplink command represents the string of bytes that was read by our payload.  The last line of the listing shows what command was parsed and processed by RESU.  Table \ref{tab:All-Commands} shows all the possible commands that we were expecting to process. 
