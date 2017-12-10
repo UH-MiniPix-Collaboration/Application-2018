@@ -41,21 +41,21 @@ The primary purpose of the MiniPIX was to detect four specific types of radiatio
 
 The MiniPIX case and heat sink assembly shown in Figure~\ref{fig:case_assem} was designed to protect the device from any moisture in the atmosphere. The case and lid were 3D printed in ABS plastic and the heat sink, composed of two large sheets and a small block of aluminum metal were all mounted to the roof of the payload. Thermal paste was applied between the contacts of the device and all aluminum pieces to allow for optimal thermal conduction and radiation of heat away from the device. A picture of the MiniPIX device inside the case and heat sink assembly is shown in Figure~\ref{fig:case_assem_pic}.
 
-\subsubsection{UV Photodiode Array}
-The UV photodiode array is composed of three SiC UV Photodiodes~\cite{JIC 139}. The characteristics of the photodiodes allow measurements within the spectral range between \SI{210}{\nano\meter} - \SI{390}{\nano\meter}. The maximum irradiance allowed for measurement is \SI{189}{\milli\watt\per\meter\squared}. A layer of two UV neutral density (ND) filters~\cite{Thor Labs} with optical densities (OD) 1.3 and 2.0 were positioned above each diode to reduce the transmission of UV light entering the sensor window. 3D renderings of the apparatus and filter are shown in Figures~\ref{fig:UVArray} and~\ref{fig:NDFilter}. This setup ensured that saturation of the diodes would not occur.
+%\subsubsection{UV Photodiode Array}
+%The UV photodiode array is composed of three SiC UV Photodiodes~\cite{JIC 139}. The characteristics of the photodiodes allow measurements within the spectral range between \SI{210}{\nano\meter} - \SI{390}{\nano\meter}. The maximum irradiance allowed for measurement is \SI{189}{\milli\watt\per\meter\squared}. A layer of two UV neutral density (ND) filters~\cite{Thor Labs} with optical densities (OD) 1.3 and 2.0 were positioned above each diode to reduce the transmission of UV light entering the sensor window. 3D renderings of the apparatus and filter are shown in Figures~\ref{fig:UVArray} and~\ref{fig:NDFilter}. This setup ensured that saturation of the diodes would not occur.
 
-\begin{figure}[!h]
-  \begin{minipage}[c]{0.49\linewidth}
-    \includegraphics[scale=1, width=.5\textwidth]{Figures/uvapparatus.JPG}
-    \caption{3D rendering of the UV photodiode array.} %make sure to put figure names underneath the pictures
-    \label{fig:UVArray}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[c]{0.49\linewidth}
-    \includegraphics[scale=1, width=.5\textwidth]{Figures/uv_filter.JPG}
-    \caption{3D rendering of an unmounted UV ND filter.} %make sure to put figure names underneath the pictures
-    \label{fig:NDFilter}
-  \end{minipage}
-\end{figure}
+%\begin{figure}[!h]
+  %\begin{minipage}[c]{0.49\linewidth}
+    %\includegraphics[scale=1, width=.5\textwidth]{Figures/uvapparatus.JPG}
+    %\caption{3D rendering of the UV photodiode array.} %make sure to put figure names underneath the pictures
+   % \label{fig:UVArray}
+  %\end{minipage}
+  %\hfill
+  %\begin{minipage}[c]{0.49\linewidth}
+   % \includegraphics[scale=1, width=.5\textwidth]{Figures/uv_filter.JPG}
+  %  \caption{3D rendering of an unmounted UV ND filter.} %make sure to put figure names underneath the pictures
+ %\label{fig:NDFilter}
+%\end{minipage}
+%\end{figure}
 
-The Arduino from RESU was used to supply a constant \SI{5.0}{\volt} signal to each detector. When a UV photon is incident on the sensor, a photocurrent is induced in the circuit and a voltage pulse is returned to the Arduino and stored on the RP3. The sensor output current can be calculated from the measured voltage and the spectral irradiance can be calculated based on the characteristics of the detector. SORA used this apparatus to quantify the spectral irradiance of solar UV light in the stratosphere.
+%The Arduino from RESU was used to supply a constant \SI{5.0}{\volt} signal to each detector. When a UV photon is incident on the sensor, a photocurrent is induced in the circuit and a voltage pulse is returned to the Arduino and stored on the RP3. The sensor output current can be calculated from the measured voltage and the spectral irradiance can be calculated based on the characteristics of the detector. SORA used this apparatus to quantify the spectral irradiance of solar UV light in the stratosphere.

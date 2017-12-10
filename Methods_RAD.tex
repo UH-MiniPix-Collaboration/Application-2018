@@ -45,55 +45,31 @@ Based on guidance from Dr.~George, who wrote his doctoral thesis on a hybrid pix
  	\end{figure}
 \newpage
 
-\subsection{Solar Radiation Methods}
-\label{UV Photodetector Testing}
+%\subsection{Solar Radiation Methods}
+%\label{UV Photodetector Testing}
 
-	\subsubsection{Responsitivity and Limitations}
-
-	The three photodiodes used for this experiment were the JIC 139 UV photodiodes with integrated amplifiers. We used the pin configuration provided by the datasheet to create an electronic circuit to integrate the photodiodes. To filter out noise, we included a \SI{3300}{\micro\farad} capacitor for each photodiode. With this configuration, we were allowed to apply a UV light source to record the measured Voltage output $V_{\text{Out}}$ with the RESU. The photocurrent $I_{\text{PD}}$ generated from incident light on the detector can be calculated by
-
-
-	\begin{equation}
-	I_{\text{PD}} = \frac{V_{\text{Out}}}{R_{f}}
-	\label{eq:photocurrent}
-	\end{equation}
+%	\subsubsection{Responsitivity and Limitations}
+%	The three photodiodes used for this experiment were the JIC 139 UV photodiodes with integrated amplifiers. We used the pin configuration provided by the datasheet to create an electronic circuit to integrate the photodiodes. To filter out noise, we included a \SI{3300}{\micro\farad} capacitor for each photodiode. With this configuration, we were allowed to apply a UV light source to record the measured Voltage output $V_{\text{Out}}$ with the RESU. The photocurrent $I_{\text{PD}}$ generated from incident light on the detector can be calculated by
 
 
-	where $R_{f}$ is the internal feedback resistor. Then, with the calibrated specifications provided, we were allowed to determine the irradiance of UV light $E_{e}$ by
+%	\begin{equation}
+%	I_{\text{PD}} = \frac{V_{\text{Out}}}{R_{f}}
+%	\label{eq:photocurrent}
+%	\end{equation}
+
+
+%	where $R_{f}$ is the internal feedback resistor. Then, with the calibrated specifications provided, we were allowed to determine the irradiance of UV light $E_{e}$ by
 	
-	\begin{equation}
-	E_{e} = \frac{I_{PD}}{(A \cdot R)}
-	\end{equation}
+%	\begin{equation}
+%	E_{e} = \frac{I_{PD}}{(A \cdot R)}
+%	\end{equation}
 	
 
-	where ${A}$ is the size of the active area and ${R}$ is the spectral responsitivity. The specifications and internal components that make up the photodiode determine the peak irradiance or limit of saturation where the voltage supplied (\SI{5}{\volt}) is equal to the voltage out. We used this value in Equation~(\ref{eq:photocurrent}) to calculate a maximum irradiance of \SI{189}{\milli\watt\per\square\meter} as shown in Table~\ref{tab: UV-Specs}.
+%	where ${A}$ is the size of the active area and ${R}$ is the spectral responsitivity. The specifications and internal components that make up the photodiode determine the peak irradiance or limit of saturation where the voltage supplied (\SI{5}{\volt}) is equal to the voltage out. We used this value in Equation~(\ref{eq:photocurrent}) to calculate a maximum irradiance of \SI{189}{\milli\watt\per\square\meter} as shown in Table~\ref{tab: UV-Specs}.
 
 
-	\begin{table}[h]
-	\centering
-	\caption{Specifications and peak irradiance of the UV photodiodes.}
-	\label{tab: UV-Specs}
-	\bigskip
-	\begin{tabular}{|c|c|c|c|c|}
-	\hline
-	\multicolumn{1}{|c|}{\bfseries Parameters} & \multicolumn{1}{|c|}{\bfseries JIC 137} &    \multicolumn{1}{|c|}{\bfseries JIC 138} & \multicolumn{1}{|c|}{\bfseries JIC 139} & \multicolumn{1}{|c|}{\bfseries Unit}\\
-	\hline
-	    Active Area $(A)$         		& $0.22$  		& $0.22$ 	& $0.22$ 	& \si{\square\milli\meter} 			\\ \hline
-	    Max Responsivity $(R)$    	& $0.12$  		& $0.12$ 	& $0.12$ 	& \si{\ampere\per\watt}  		\\ \hline
-	    Feedback Resistor $(R_f)$ 	& $10$    		& $100$  	& $1000$ 	& \si{\mega\ohm} 				\\ \hline    
-	    Output Voltage $(V_{OUT})$ & $5$     		& $5$    	& $5$    	& \si{\volt}      					\\ \hline
-	    Photocurrent $(I_{PD})$     	& $500$   		& $50$   	& $5$	& \si{\nano\ampere}        			\\ \hline
-	    Peak Irradiance $(E_e)$   	& $18939$ 	& $1849$ 	& $189$  	& \si{\milli\watt\per\square\meter}     	\\ \hline 
-	\end{tabular}
-	\medskip
-	\end{table}
+%	\begin{table}[h]
+%	\centering
+%	\caption{Specifications and peak irradiance of the UV photodiodes.}
+%	\label{tab: UV-Specs}
 
-	%The standard solar spectrum known as $AM0$ was integrated over the Sun's UV spectrum ${S}{(\si{lambda})}$ from $210\si{\nano\meter}$ $380\si{\nano\meter}$.
-
-	The irradiance of UV light increases by about \SI{6}{\percent} per kilometer of altitude and may vary depending on the amount of ozone~\cite{uv_irradiance} in the local region. The UV ND filters were added to the aperture to ensure the diodes would be able measure the high UV irradiance in the stratosphere. The total optical density ${(OD_{\text{Tot}})}$ can be determined by the sum of the filters ${OD_{1}}$ and ${OD_{2}}$. The optical density for one filter can be determined by
-
-	\begin{equation}
-	OD =  {log}_{10} (\frac{1}{T})
-	\end{equation}
-	
-	where $T$ is the percent transmission of the filter in the UV region provided by Thor Labs.
