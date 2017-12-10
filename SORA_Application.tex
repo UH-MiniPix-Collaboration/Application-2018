@@ -1,0 +1,137 @@
+\documentclass[aps,superscriptaddress,floatfix,nofootinbib,showpacs,amsmath,amssymb,altaffilletter,floatfix,onecolumn]{revtex4-1}
+%add "rmp" within document class to make it double column and "twocolumn"
+%---
+
+\input{def.tex}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[title]{appendix}
+\usepackage{float}
+%\linespread{0.9}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rfoot{\thepage}
+\pagestyle{fancy}
+%\linespread{0}
+\renewcommand{\thepage}{}
+\renewcommand{\thepage}{\arabic{page}}
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}}
+\parskip = 6pt %changes spacing between paragraphs
+%\nolinenumbers
+\makeatletter
+\def\p@subsection{}
+\makeatother
+\makeatletter
+\def\p@subsubsection{}
+\makeatother
+%---
+\begin{document}
+%---
+\title{SORA 2.0: Stratospheric Organism and Radiation Analyzer}
+
+\begin{abstract}
+\begin{center}
+{\bf Abstract}
+\end{center}
+
+The SORA 2.0 payload will again sample for the existence of microorganisms and bacterial spores in the upper atmosphere.  This mission will build upon the first SORA mission in 2017, and help confirm previous findings using a developed captured system. Furthermore, the payload will study different aspects of the surrounding environment such as radiation exposure, temperature, pressure and humidity. The payload has three main scientific objectives. First, build upon and further develop a novel system~\cite{SORA} that will isolate surrounding air and sample for cells. Second, an on-board MiniPIX USB silicon sensor~\cite{silicon_sensor} will analyze exposure to cosmic radiation that microorganisms may encounter. Finally, a mature version of RESU (Realtime Environmental Sensing Unit)~\ref{SORA} will monitor the environmental conditions such as temperature, pressure, and humidity. The payload design will take advantange of additive manufacturing and hobby electronics in its construction to provide an accessible basis for future missions and explore the bounds of the technology available.  
+
+\newpage %Breaks page for the Table of Contents.
+\end{abstract}
+\input{authors.tex}
+\setlength{\parindent}{1em}
+\setdefaultleftmargin{1em}{1em}{}{}{}{}
+%---
+\setcounter{page}{0}\thispagestyle{empty}
+%---
+\maketitle
+\onecolumngrid
+\setcounter{tocdepth}{2}
+\setcounter{page}{0}\thispagestyle{empty}
+\tableofcontents
+\setcounter{page}{0}\thispagestyle{empty}
+\newpage
+%---
+\onecolumngrid %changed from "twocolumngrid"
+
+%Section: Design
+%\input{Design.tex} %This needs to be removed as a section and only the one below this (SORA Hardware Description) will be left in place.
+
+%Section: Mission Overview w/ Subsections Mission Statement and Hypotheses
+	\input{Introduction.tex}
+	%Scientific Background
+		\input{IntroAstro.tex}
+		\input{IntroRad.tex}
+
+%Payload Design and Operation
+	%Structure Description
+	%Subsystems
+	%Thermal Control Plan
+	%Sensors
+	%Power Budget
+	%Weight Budget
+	
+%Data Interface
+	%HASP and Paylad Communication
+	%Uplink Data Format
+	%Downlink Data Format
+
+%Decontamination Preflight & Post-flight
+	%Objectives
+	%Sterilization Preflight/Postflight
+	
+%In-Flight Failure
+%Testing and Simulation
+%Project Management
+	%Team Structure
+	%Timeline
+	%Funding
+	
+%Section: SORA Hardware Description
+\input{Hardware.tex}
+\input{Design_RESU.tex}
+\input{Design_Astro.tex}
+\input{Design_RAD.tex}
+
+%Section: Methods
+\input{Methods.tex}
+\input{Methods_RESU.tex}
+\input{Methods_Astro.tex}
+\input{Methods_RAD.tex}
+
+%Results and Analysis
+%Section: Flight Conditions and Environmental Data
+\input{Results.tex} %RESU first
+\input{Results_Rad.tex} %MiniPIX last
+\newpage
+\input{Results_Astro.tex} %Astro second
+
+%\input{Results_UV.tex}
+%\input{Simulations.tex} %Simulations results
+
+%Discussion
+\input{Discussion_RESU.tex} %RESU first
+\input{Discussion_Astro.tex} %Astro second
+\input{Discussion_Rad.tex} %MiniPIX last
+\input{Discussion_Simulations.tex} %Simulations discussion
+
+%Conclusion
+\input{Conclusion.tex} 
+\newpage
+%Appendix
+\input{Appendix.tex}
+\newpage
+
+%References
+\input{bib.tex}%Bibliography file
+
+%
+\clearpage
+%\bibliographystyle{SORA}
+%\bibliography{SORA}
+\end{document}
