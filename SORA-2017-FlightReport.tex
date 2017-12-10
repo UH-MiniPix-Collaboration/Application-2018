@@ -32,13 +32,15 @@
 %---
 \begin{document}
 %---
-\title{SORA: Stratospheric Organism and Radiation Analyzer}
+\title{SORA 2.0: Stratospheric Organism and Radiation Analyzer}
 
 \begin{abstract}
 \begin{center}
 {\bf Abstract}
 \end{center}
-The SORA payload sampled for the existence of microorganisms and bacterial spores in the upper atmosphere. The payload analyzed different aspects of the surrounding environment such as radiation exposure, temperature, pressure and humidity. The payload had three main scientific objectives. First, design and build a novel system that will isolate surrounding air and sample for cells. Second, onboard sensors analyze exposure to solar and cosmic radiation that microorganisms may encounter. Finally, monitor the environmental conditions such as temperature, pressure, and humidity. Furthermore, the design employed additive manufacturing and hobby electronics in its construction to provide an accessible basis for future missions and explore the bounds of the technology available.  SORA successfully isolated organisms and data was received on November 28th, 2017.  Onboard sensors gathered a wealth of information regarding surrounding radiation, with a peak dosage rate of about \SI{0.07}{\micro\Gray\per\minute} at ascent and about \SI{0.05}{\micro\Gray\per\minute} during float. Finally, SORA monitored the environment for the duration of the flight, successfully testing the prototype flight computer, while keeping the power consumption below \SI{1.5}{\ampere} at \SI{30}{\volt}.
+
+The SORA 2.0 payload will again sample for the existence of microorganisms and bacterial spores in the upper atmosphere.  This mission will build upon the first SORA mission in 2017, and help confirm previous findings using a developed captured system. Furthermore, the payload will study different aspects of the surrounding environment such as radiation exposure, temperature, pressure and humidity. The payload has three main scientific objectives. First, build upon and further develop a novel system~\cite{SORA} that will isolate surrounding air and sample for cells. Second, an on-board MiniPIX USB silicon sensor~\cite{silicon_sensor} will analyze exposure to cosmic radiation that microorganisms may encounter. Finally, a mature version of RESU (Realtime Environmental Sensing Unit)~\ref{SORA} will monitor the environmental conditions such as temperature, pressure, and humidity. The payload design will take advantange of additive manufacturing and hobby electronics in its construction to provide an accessible basis for future missions and explore the bounds of the technology available.  
+
 \newpage %Breaks page for the Table of Contents.
 \end{abstract}
 \input{authors.tex}
@@ -60,13 +62,36 @@ The SORA payload sampled for the existence of microorganisms and bacterial spore
 %Section: Design
 %\input{Design.tex} %This needs to be removed as a section and only the one below this (SORA Hardware Description) will be left in place.
 
-%Section: Introduction
-\input{Introduction.tex}
-%Section: IntroAstrobiology
-\input{IntroAstro.tex}
-%Section: IntroRadiation
-\input{IntroRad.tex}
+%Section: Mission Overview w/ Subsections Mission Statement and Hypotheses
+	\input{Introduction.tex}
+	%Scientific Background
+		\input{IntroAstro.tex}
+		\input{IntroRad.tex}
 
+%Payload Design and Operation
+	%Structure Description
+	%Subsystems
+	%Thermal Control Plan
+	%Sensors
+	%Power Budget
+	%Weight Budget
+	
+%Data Interface
+	%HASP and Paylad Communication
+	%Uplink Data Format
+	%Downlink Data Format
+
+%Decontamination Preflight & Post-flight
+	%Objectives
+	%Sterilization Preflight/Postflight
+	
+%In-Flight Failure
+%Testing and Simulation
+%Project Management
+	%Team Structure
+	%Timeline
+	%Funding
+	
 %Section: SORA Hardware Description
 \input{Hardware.tex}
 \input{Design_RESU.tex}
