@@ -59,6 +59,26 @@ Our wiring will not change much from the last mission~\cite{SORA}.  From the EDA
 
 We will use discrete commands in this mission.  Two of the commands will be used to turn the astrobioly system on and off.  This is only in case of emergency if we notice that the system is not responding to our serial commands.  The other two discrete channels will be used to turn on and off the power of RESU in case that we notice an issue.
 
+\begin{table}[!ht]
+\centering
+\caption{Table of all discrete commands to be used during flight} 
+\label{tab:Dis-Commands}
+\bigskip
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\bfseries Command} & \multicolumn{1}{c|}{\bfseries Purpose} &  \multicolumn{1}{c|}{\bfseries EDAC Pin} & \multicolumn{1}{c|}{\bfseries Description} \\
+\hline
+    Discrete 1     	& Astro. System ON 	& f	 & Initiates the pumps and collection systems   \\ \hline 
+    Discrete 2    	& Astro. System OFF 	& n	 &  Shuts down the pumps and causes collection systems to retract  \\ \hline
+    Discrete 3  	& RESU On 	& h	 & Powers up RESU   \\ \hline 
+    Discrete 4 		& RESU OFF 	& p	 & Shuts down RESU   \\ \hline
+\end{tabular}
+\medskip
+\end{table}
+
+
+
+
 As for the DB9 connection, we will again use it to send serial uplink and downlink commands to better our flight operation, as well as to ensure the best possible experiment takes place while at float.  The Tx and Rx leads will be connected to the Arduino which then reads in the serial signal for reading and writing.  Each uplink command will be verified by a state machine that processes each string of \num{32} bits.  A Maxim 232 integrated circuit will be used in between the transmission and receiving leads to and from the Arduino which handles the input of the serial communication, ensuring proper integration with HASP voltages and Arduino voltages.  The baud rate for serial communication will be set to 4800 bits per second ($bits/sec$). Listing~\ref{Downlinks} is a sample downlink data packet received during our previous flight.
 
 \lstset{basicstyle=\small, numbers=left, xleftmargin=2em, frame=tb, label = Downlinks, framexleftmargin=1.5em}
