@@ -1,6 +1,12 @@
 \section{Thermal Control Plan}
 \label{sec:TCP}
-This is the section for the thermal control plan.
+Based on our previous mission~\cite{SORA}, we opted to have a similar thermal control plan but with a few changes.  To simplify the payload construction and control, we opted for an manual temperature monitoring and control system.  
+
+Each device will have a temperature sensor and we will actively monitor the temperatures based on the downlink packet information.  If we notice an upwards trend or downwards trend in temperature change, we will adjust the heaters to turn on/off.  For other devices without heaters, we will turn them off if they are in danger of overheating.
+
+In the case of our payload experiencing colder temperatures, all of our devices will be able to operate beyond expected temperatures on the flight.  For the pumps, they will need to have heaters installed to maintain operation.
+
+The temperature will be checked and recorded periodically for all devices.  Based on downlinked values, we will make decisions from the ground to manually manage our payload.
 
 %\begin{figure}[!htb]
 %\begin{center}
