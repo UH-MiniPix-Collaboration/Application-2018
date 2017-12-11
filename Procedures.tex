@@ -14,7 +14,7 @@
 There will be an initial testing phase that will include each component that will draw or supply power/current. During this phase, each component will receive power and transmit data to ascertain proper functionality. Communication will be tested by sending commands to the system and receiving status updates in return. In addition, to testing proper functioning of the pumps and solenoid valves, the clean box will be tested to ensure sanitation procedures are successful and verify that the materials inside the bottles within the clean box remain unfrozen. This initial phase is to be followed by an integration of components into their respective subsystems. Each subsystem will be tested to ensure functionality within itself and confirm actual power consumption and current drawn at various voltages. The subsystems will be thermally vacuum tested to determine thermal stability and general functionality at each phase of the flight (ascension, float, descent) for a total of 24 hours. Finally, a complete integration will complete the payload. The complete integration will be tested in the same manner as the subsystems to establish a fully functioning payload. Once this final phase is complete, the payload will be sealed after it has undergone sanitation procedures.
 
 \subsubsection{Self Integration}
-For Astrobiology, we will try to determine the airflow through the system under normal ground level conditions and float conditions with as much precision as possible.  We will run two pumps and we will monitor the power consumption of the system as well. The pumps, along with the temperature, humidity and pressure sensors and tubing will undergo extensive thermal vacuum testing in the range of \SIrange{-3}{25}{\celsius}, with a pressure range of \SIrange{0}{10}{\milli\bar}. The vacuum chamber tests will run for approximately \SIrange{8}{15}{\hour}, to replicate conditions from the previous flights. In the past~\cite{SORA}, the pumps were subjected to a temperature range of \SIrange{-30}{50}{\celsius} during integration and ran again for \SI{8}{\hour} afterwards and prior to flight. The pumps have proven to function in extremem environments without an issues. 
+For Astrobiology, we will try to determine the airflow through the system under normal ground level conditions and float conditions with as much precision as possible.  We will run two pumps and we will monitor the power consumption of the system as well.
 
 There will be several clean boxes used during the testing procedures to ensure stability of the materials and agarose solution under flight conditions. The multiple boxes will also allow for contamination and leak testing. Once the aforementioned actuator/pump/solenoid combination has been assembled, the sealed and sanitized clean box will be connected via the tubing from the pumps. This new assembly will be vacuum chamber tested under the same pressure and temperature conditions that are to be expected throughout the flight. 
 
@@ -22,7 +22,9 @@ RESU will once again undergo rigorous testing in order to ensure proper operatio
 
 When the actuator/pumps/solenoid/clean box assembly and the environmental package assembly have undergone separate and complete flight simulations in the vacuum chamber, the two will be combined to form a more complete assembly. This new assembly will be vacuum chamber tested. 
 
-In near vacuum environments, electrical devices under continuous operation tend to build up heat as there is practically no thermal convection. Based off of the results from the last mission, we have decided the aluminum heat sink is the best option~\cite{SORA}. Once the MiniPIX has been tested separately it will be added to the assembly to make a final assembly that will be vacuum tested. The MiniPIX will be integrated with the Raspberry Pi via USB. Using the Pixet software, we will test known sources to measure the energy levels and particle flux to ensure that the MiniPIX has been properly calibrated.
+Finally, once the MiniPIX has been tested separately it will be added to the previous assembly to make a final assembly that will be vacuum tested.  The MiniPIX will be integrated with the raspberry pi via USB. Using the Pixet software, we will test known sources to measure the energy levels and particle flux. We will be running monte carlo simulations with the FLUKA software to model particle passage through a variety of known material that will be on the payload. Using these two methods will improve results for particle identification.
+
+For system check, we will have an internal system check, measuring power draw and testing the thermal limits the vacuum chamber. The same testing will be done for the UV photodiodes, as well as testing outside in UV-A direct contact sampling. 
     
 %Our detailed preliminary testing plan is described in \textbf{appendix B (make sure this stays consistent)}.  
 
@@ -30,12 +32,6 @@ In near vacuum environments, electrical devices under continuous operation tend 
 The integration team, which consists of all team members to date, will arrive at the integration site approximately \numrange{1}{2} days before the scheduled testd. The first step of the integration will be to attach the payload to the HASP plate. Following attachment, it will be verified that the payload receives power from the HASP EDAC connector and is successfully sending and receiving operation commands from the ground. Our results for bacteria collection rely heavily on a very little to no contamination risk setting pre and post flight, therefore, we think it best that the sampling system remain powered down until float altitude has been reached. We can offer a proxy for the integration testing in the form of a separate actuator and pump just to confirm that commands are being received from the ground. Once everything is determined to be in perfect working order the entire system will be shut down in preparation for the actual flight.
 
 \subsection{Post Integration Operations}
-
-\subsubsection{Astrobiology}
-
-
-\subsubsection{Radiation}
-
 
 \subsection{Flight Operations}
 Our systems are all automated, therefore the only flight operations to consider are to turn on the pumps once float conditions are achieved. The payload will be monitored via analog downlinking to determine the appropriate time to switch the pumps on. 
