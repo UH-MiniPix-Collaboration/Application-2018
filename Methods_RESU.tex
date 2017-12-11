@@ -28,11 +28,11 @@ The inertial measuring unit (IMU) is a combination sensor that reports orientati
 
 \subsubsection{Powering It All Up}
 
-In order to stay within the power constraints, a robust power supply was needed that could handle all the components of the payload.  The power supply we will be using is the PPM-DC-ATX-P by WinSystems INC.  It offered the desired number of \SI{+5}{\volt} and \SI{+12}{\volt} outputs needed to power the payload's electronics.  This power supply could effectively take \SI{+30}{\volt} and step it down to two \SI{+12}{\volt} and two \SI{+5 }{\volt} outputs.  One of the \SI{+12}{\volt} outputs goes to the Arduino since it can step down to the appropriate voltages internally while the other goes to a PWM motor for the solenoid.  One of the \SI{+5 }{\volt} outputs powers two analog sensors that will be sent to HASP through the EDAC connection (more on that in the next sections).  The remaining \SI{+5 }{\volt} output is converted to a USB power cable for the RP3.  The power supply also gave four ground outputs that were used by each respective component. 
+In order to stay within the power constraints, a robust power supply was needed that could handle all the components of the payload.  The power supply we will be using is the PPM-DC-ATX-P by WinSystems INC.  It offered the desired number of \SI{+5}{\volt} and \SI{+12}{\volt} outputs needed to power the payload's electronics.  This power supply could effectively take \SI{+30}{\volt} and step it down to two \SI{+12}{\volt} and two \SI{+5 }{\volt} outputs.  One of the \SI{+12}{\volt} outputs goes to the Arduino since it can step down to the appropriate voltages internally while the other goes to a PWM motor for the solenoid.  One of the \SI{+5 }{\volt} outputs powers two analog sensors that will be sent to HASP through the EDAC connection (more on that in the next sections).  The remaining \SI{+5 }{\volt} output is converted to a USB power cable for the RP3.  The power supply also has four ground outputs that will be used by each respective component. 
 
 \subsubsection{Uplink Commands: Relay System for Pumps and Heaters}
 
-When a command is received from the mission control team, it is transmitted straight through the DB9 connection into the Arduino which either accepts or declines it based on our state machine.  If accepted, the state machine would then interpret which hexadecimal command was sent and would then send a logical HIGH pulse to the relay which subsequently turned a system on or off.  Table~\ref{tab:All-Commands} lists all the commands to be used during flight.
+When a command is received from the mission control team, it will be transmitted straight through the DB9 connection into the Arduino which will either accept or decline it based on our state machine.  If accepted, the state machine would then interpret which hexadecimal command was sent and would then send a logical HIGH pulse to the relay which subsequently turns a system on or off.  Table~\ref{tab:All-Commands} lists all the commands to be used during flight.
 
 \begin{table}[!ht]
 \centering
@@ -51,16 +51,18 @@ When a command is received from the mission control team, it is transmitted stra
 \medskip
 \end{table}
 
-Serial uplink commands allow for 4-byte hexadecimal strings.  Since none of our processes require more than a single parameter, we elected to leave the second parameter as 0xFF.  Note that every ``disengage'' results in our payload returning to nominal current which is about \SI{0.29}{\ampere}.  The ``pumps on'' command executed a sequence of events. After receiving the command, a normally closed solenoid would open and then after one second the pump would begin the collection process.  The solenoid does have an initial peak current of \SI{1.2}{\ampere} and to suppress it, a punch-and-hold circuit was implemented using a Pololu G2 High Power Motor Driver.  It serves the purpose of reducing  the current consumption from the solenoid to stay within the power budget.  The heaters are there to make sure the pumps could turn on in the extreme cold temperatures.  
+Serial uplink commands allow for 4-byte hexadecimal strings.  Since none of our processes require more than a single parameter, we elected to leave the second parameter as 0xFF.  Note that every ``disengage'' results in our payload returning to nominal current which is about \SI{0.29}{\ampere}.  The ``pumps on'' command executed a sequence of events. After receiving the command, two normally closed solenoids would open and then after one second the pumps would begin the collection process.  The solenoids does have an initial peak current of \SI{1.2}{\ampere} each and to suppress it, a punch-and-hold circuit will be implemented using a Pololu G2 High Power Motor Driver.  It serves the purpose of reducing the current consumption from the solenoid to stay within the power budget.  The heaters are there to make sure the pumps can turn on in the extreme cold temperatures.  
 
 \subsubsection{Interfacing with HASP: EDAC and DB9 Connections}
 
-From the EDAC pins, we joined two of the \SI{30}{\volt} leads together in parallel to supply power to the central power supply.  Likewise, two of the ground leads were used to ground the supply.  A pair of \SI{30}{\volt} and ground leads were also used as input to the relay circuit in order to supply power to the pumps which required at least \SI{24}{\volt} to operate.  The last pair of \SI{30}{\volt} and ground leads were used as input to the punch and hold circuit mentioned in the previous section to power the solenoid which required at least \SI{20}{\volt} to operate.  Two temperature sensors were connected by both analog leads from the EDAC connection.  The corresponding ground pins were used to ground them.  These two sensors were placed on the pump and the outside of the payload respectfully.  None of the discrete channels were used because serial uplink and downlink operations were more preferable for our mission.
+Our wiring will not change much from the last mission~\cite{SORA}.  From the EDAC pins, we will join two of the \SI{30}{\volt} leads together in parallel to supply power to the central power supply.  Likewise, two of the ground leads will be used to ground the supply.  A pair of \SI{30}{\volt} and ground leads will also be used as input to the relay circuit in order to supply power to the pumps which require at least \SI{24}{\volt} to operate.  The last pair of \SI{30}{\volt} and ground leads will be used as input to the punch and hold circuit mentioned in the previous section to power the solenoids which require at least \SI{20}{\volt} to operate.  Two temperature sensors will be connected by both analog leads from the EDAC connection.  The corresponding ground pins will be used to ground them.  These two sensors will be placed on the pumps - one sensor per pump.  
 
-As for the DB9 connection, we used it to send serial uplink and downlink commands to better our flight operation, as well as to ensure the best possible experiment takes place while at float.  The Tx and Rx leads were connected to the Arduino which then read in the serial signal for reading and writing.  Each uplink command was verified by a state machine that processed each string of \num{32} bits.  A Maxim 232 integrated circuit was put in between the transmission and receiving leads to and from the Arduino which handled the input of the serial communication, ensuring proper integration with HASP voltages and Arduino voltages.  The baud rate for serial communication was set to 4800 bits per second ($bits/sec$). Listing~\ref{Downlinks} is a sample downlink data packet received during flight.
+We will use discrete commands in this mission.  Two of the commands will be used to turn the astrobioly system on and off.  This is only in case of emergency if we notice that the system is not responding to our serial commands.  The other two discrete channels will be used to turn on and off the power of RESU in case that we notice an issue.
+
+As for the DB9 connection, we will again use it to send serial uplink and downlink commands to better our flight operation, as well as to ensure the best possible experiment takes place while at float.  The Tx and Rx leads will be connected to the Arduino which then reads in the serial signal for reading and writing.  Each uplink command will be verified by a state machine that processes each string of \num{32} bits.  A Maxim 232 integrated circuit will be used in between the transmission and receiving leads to and from the Arduino which handles the input of the serial communication, ensuring proper integration with HASP voltages and Arduino voltages.  The baud rate for serial communication will be set to 4800 bits per second ($bits/sec$). Listing~\ref{Downlinks} is a sample downlink data packet received during our previous flight.
 
 \lstset{basicstyle=\small, numbers=left, xleftmargin=2em, frame=tb, label = Downlinks, framexleftmargin=1.5em}
-\begin{lstlisting}[caption = Sample of downlinked data packets ID: 15667 - 15670.]
+\begin{lstlisting}[caption = Sample of downlinked data packets ID: 15667 - 15670 from SORA 2017~\cite{SORA}.]
 ...
 begin_packet
 15667,-21.05,-0.33,35.62,-1.00,0.12,0.25,-0.71,0.63,9.30,-30.25,-26.69,-60.88
@@ -82,14 +84,14 @@ end_packet
 \end{lstlisting}
 \medskip
 
-Each packet of data delimited by keywords \verb|begin_packet| and \verb|end_packet| so that parsing each file would be easier.  During flight, these data packets were crucial status updates to the state of our payload.  From them, we were able to determine when to engage/disengage the heaters and other payload systems.
+Each packet of data will be delimited by keywords \verb|begin_packet| and \verb|end_packet| so that parsing each file be easier.  During our previous flight, these data packets were crucial status updates to the state of our payload.  We will once again use them for the same purpose to keep a close eye on our payload.
 
-Data packets contained information about the readings from each sensor.  The first integer represents the ID of the packet which by the end of flight was a total of 16,147 packets.  Following the packet ID is the three temperature readings, gyroscope $x, y, z$ values, accelerometer $x, y, z$ values, magnetometer $x, y, z$ values, pressure readings, humidity readings, UV \#1, \#2, \#3 voltage readings, and finally the timestamp in $HH$:$MM$:$SS$ $MM$/$DD$/$YY$ at which the packet was written.  
+Data packets will contain information about the readings from each sensor.  The first integer represents the ID of the packet.  Following the packet ID are the three temperature readings, gyroscope $x, y, z$ values, accelerometer $x, y, z$ values, magnetometer $x, y, z$ values, pressure readings, humidity readings, UV \#1, \#2, \#3 voltage readings, and finally the timestamp in $HH$:$MM$:$SS$ $MM$/$DD$/$YY$ at which the packet was written.  
 
-In addition to downlinking sensor data, we also elected to downlink serial uplink commands as shown in listing \ref{Uplinks}.  
+In addition to downlinking sensor data, we also want to downlink serial uplink commands as shown in listing \ref{Uplinks}.  
 
 \lstset{basicstyle=\small, numbers=left, frame=tb, linewidth=11.5cm, xleftmargin=.4\textwidth, label = Uplinks}
-\begin{lstlisting}[caption = Sample of received uplink commands in downlinked packets]
+\begin{lstlisting}[caption = Sample of received uplink commands in downlinked packets in SORA 2017~\cite{SORA}]
 ...
 1
 2
@@ -103,4 +105,4 @@ Received Command: 71
 \end{lstlisting}
 \medskip
 
-Each line within a received uplink command represents the string of bytes that was read by our payload.  The last line of the listing shows what command was parsed and processed by RESU.  Table \ref{tab:All-Commands} shows all the possible commands that we were expecting to process. 
+Each line within a received uplink command represents the string of bytes that will be read by our payload.  The last line of the listing shows what command will be parsed and processed by RESU.  Table \ref{tab:All-Commands} shows all the possible commands that we are expecting to process. 
