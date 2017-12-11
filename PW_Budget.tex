@@ -1,3 +1,79 @@
 \section{Power and Weight Budget}
 \label{sec:PW_Budget}
-We will copy the thing from the provisional application and update it with new values....
+
+%We will copy the thing from the provisional application and update it with new values....
+%\begin{table}[H}
+%\centering
+%\label{budget}
+%	\begin{tabular}{|c|c|c|c|c|c|}\hline
+%	\caption{Power and weight budget for SORA 2.0}
+%	Component & Voltage (VDC) & Current (mA) & Duty Cycle (\%) & Power (mW) & Weight (g)\\ \hline
+%	30 to 12 V DC/DC Converter & 30 &  & 100 & NA & NA \\ \hline
+%	Polulu Driver & 30 &  & 100 & NA & NA \\ \hline
+%	Polulu Driver & 30 &  & 100 & NA & NA \\ \hline
+%	RESU & 12 & 65 & 100 & 780 & 9 \\ \hline
+%	Pump 1 Heater & 12 &  & 10 & NA & NA \\ \hline
+%	Pump 2 Heater & 12 &  & 10 & NA & NA \\ \hline
+%	Pump 1 & 24 & 270 & 75 & 6480 & 1769.01 \\ \hline
+%	Pump 2 & 24 & 270 & 75 & 6480 & 1769.01 \\ \hline
+%	Solenoid 1 & 12 & 241.67 & 50 & 2900.04 & 5 \\ \hline
+%	Solenoid 2 & 12 & 241.67 & 50 & 2900.04 & 5 \\ \hline
+%	Servo Motor & 12 & 7 & 0.1 & 84 & 10 \\ \hline
+%	Temperature Sensor 1 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+%	Temperature Sensor 2 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+%	Temperature Sensor 3 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+%	Temperature Sensor 4 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+%	Temperature Sensor 5 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+%	Temperature Sensor 6 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+%	Temperature Sensor 7 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+%	Pressure \& Altitude Sensor 1 & 3.3 & 1.4 & 100 & 4.62 & 0.005 \\ \hline
+%	Real Time Clock (RTC) & 3.3 & 0 & 100 & 0.00198 & 0.005 \\ \hline
+%	GPS & 3.3 & 41 & 100 & 135.3 & 0.005 \\ \hline
+%	Real Time Clock (RTC) & 3.3 & 0 & 100 & 0.00198 & 0.005 \\ \hline
+%	Humidity Sensor & 3.3 & 0.5 & 100 & 1.65 & 0.0025 \\ \hline
+%	BNO Multisensor & 3.3 & 0.1 & 100 & 0.33 & 0.005 \\ \hline
+%	Total &  & 1138.97 &  & 22839.53 & 3992.24 \\ \hline
+%	
+%	\end{tabular}
+%\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Power and weight budget for SORA 2.0} 
+\label{tab:budget}
+\bigskip
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\bfseries Component} & \multicolumn{1}{c|}{\bfseries Voltage (VDC)} &  \multicolumn{1}{c|}{\bfseries Current} & \multicolumn{1}{c|}{\bfseries Duty Cycle (\%)} & \multicolumn{1}{c|}{\bfseries Power (mW)} & \multicolumn{1}{c|}{\bfseries Weight (g)} \\
+\hline
+    30 to 12 V DC/DC Converter & 30 &  & 100 & NA & NA \\ \hline
+	Polulu Driver & 30 &  & 100 & NA & NA \\ \hline
+	Polulu Driver & 30 &  & 100 & NA & NA \\ \hline
+	RESU & 12 & 65 & 100 & 780 & 9 \\ \hline
+	Pump 1 Heater & 12 &  & 10 & NA & NA \\ \hline
+	Pump 2 Heater & 12 &  & 10 & NA & NA \\ \hline
+	Pump 1 & 24 & 270 & 75 & 6480 & 1769.01 \\ \hline
+	Pump 2 & 24 & 270 & 75 & 6480 & 1769.01 \\ \hline
+	Solenoid 1 & 12 & 241.67 & 50 & 2900.04 & 5 \\ \hline
+	Solenoid 2 & 12 & 241.67 & 50 & 2900.04 & 5 \\ \hline
+	Servo Motor & 12 & 7 & 0.1 & 84 & 10 \\ \hline
+	Temperature Sensor 1 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+	Temperature Sensor 2 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+	Temperature Sensor 3 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+	Temperature Sensor 4 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+	Temperature Sensor 5 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+	Temperature Sensor 6 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+	Temperature Sensor 7 & 5 & 0.09 & 100 & 0.45 & 0.02 \\ \hline
+	Pressure \& Altitude Sensor 1 & 3.3 & 1.4 & 100 & 4.62 & 0.005 \\ \hline
+	Real Time Clock (RTC) & 3.3 & 0 & 100 & 0.00198 & 0.005 \\ \hline
+	GPS & 3.3 & 41 & 100 & 135.3 & 0.005 \\ \hline
+	Real Time Clock (RTC) & 3.3 & 0 & 100 & 0.00198 & 0.005 \\ \hline
+	Humidity Sensor & 3.3 & 0.5 & 100 & 1.65 & 0.0025 \\ \hline
+	BNO Multisensor & 3.3 & 0.1 & 100 & 0.33 & 0.005 \\ \hline
+	Total &  & 1138.97 &  & 22839.53 & 3992.24 \\ \hline
+\end{tabular}
+\medskip
+\end{table}
+
+
+
