@@ -1,7 +1,7 @@
 \subsection{RESU Design}
 \label{sec:RESU-Design}
 
-For this mission, it was necessary to build a flight computer that could manage flight operations as well as send and receive serial uplink and downlink packets.  This was the motivation for the development of a Real-Time Environmental Sensing Unit (RESU). RESU is composed of two components: a Raspberry Pi 3 (RP3) and an Arduino Mega (Arduino) which interfaced over serial USB.  The RP3 and Arduino both are hobby electronic computers, but the RP3 is geared towards recording and processing while the Arduino is more efficient at sensor integration.  The Arduino's primary purpose was to collected data from various sensors that monitored environmental conditions. It also handled telemetry, periodically downlinking packets and accepting uplink commands received from the ground. The RP3 recorded data from the Arduino's serial port and saved data frames every six seconds from the MiniPIX.  Table~\ref{tab:Sensors} lists the various sensors utilized during the flight.
+For this mission, it will be necessary to build a flight computer that can manage flight operations as well as send and receive serial uplink and downlink packets.  This was the motivation for the development of a Real-Time Environmental Sensing Unit (RESU). RESU is composed of two components: a Raspberry Pi 3 (RP3) and an Arduino Mega (Arduino) which interfaced over serial USB.  The RP3 and Arduino both are hobby electronic computers, but the RP3 is geared towards recording and processing while the Arduino is more efficient at sensor integration.  The Arduino's primary purpose was to collected data from various sensors that monitored environmental conditions. It also handled telemetry, periodically downlinking packets and accepting uplink commands received from the ground. The RP3 recorded data from the Arduino's serial port and saved data frames every six seconds from the MiniPIX.  Table~\ref{tab:Sensors} lists the various sensors utilized during the flight.
 
 \begin{table}[h!]
 \centering
@@ -17,7 +17,6 @@ For this mission, it was necessary to build a flight computer that could manage 
     BNO 6055       					& 1 & Arduino 		& Record IMU Data in 9 degrees of freedom \\ \hline    
     Real Time Clock 				& 2 & Arduino/RP3 	& Record temperature compensated timestamps in CT \\\hline
     Humidity        				& 1 & Arduino 		& Record atmospheric humidity levels \\ \hline
-    UV Photodiodes (JIC 139)		& 3 & Arduino 		& Record UV intensities \\ \hline 
     GPS     						& 1 & Arduino 		& Determine latitude, longitude, altitude and direction \\ \hline
     MiniPIX         				& 1 & RP3     		& Cosmic ray detector \\ \hline
 \end{tabular}
