@@ -17,13 +17,13 @@ For this mission, we will again use RESU (Real-Time Environmental Sensing Unit),
     BNO 6055       					& 1 & Arduino 		& Record IMU Data in 9 degrees of freedom \\ \hline    
     Real Time Clock 				& 2 & Arduino/RP3 	& Record temperature compensated timestamps in CT \\\hline
     Humidity        				& 1 & Arduino 		& Record atmospheric humidity levels \\ \hline
-    GPS     						& 1 & Arduino 		& Determine latitude, longitude, altitude and direction \\ \hline
     MiniPIX         				& 1 & RP3     		& Cosmic ray detector \\ \hline
 \end{tabular}
 \end{table}
 
 \subsubsection{Electronics Design}
-Since much of the space inside of our payload will be taken up by the pumps and clean box from the astrobiology systems we had to design our electronics to be relatively compact.  It was decided that we would only use one RP3 to both interface with MiniPIX and store sensor data from the Arduino.  Also, in order to reduce the space required for the interface between the Arduino and all of the payload's sensors, we used two layers of proto shields to more effectively utilize vertical space.  The RTC, pressure, humidity, and inertial measurement sensors are all mounted directly on the first shield while the temperature and GPS sensors are mounted on to the top most shield. 
+Since much of the space inside of our payload will be taken up by the pumps and clean box from the astrobiology systems we had to design our electronics to be relatively compact.  It was decided that we would only use one RP3 to both interface with MiniPIX and store sensor data from the Arduino.  Also, in order to reduce the space required for the interface between the Arduino and all of the payload's sensors, we will use two layers of proto shields to more effectively utilize vertical space.
+The RTC, pressure, humidity, and inertial measurement sensors will be mounted directly on the first shield while the temperature are mounted on to the top most shield. 
 
 \subsubsection{Telemetry}
-RESU was designed to handle every component of during a mission.  It is in charge of all  telemetry to and from the HASP systems.  Downlinked packets will provide timestamped readings from all the payload's sensors which help us in analyzing the current state of our payload.  RESU also was programmed to receive four uplink commands: heaters on/off and pumps on/off.  These commands can be sent at our discretion which allow us to manage our collection systems at any given point during the flight based on environmental and component temperatures. 
+RESU will handle every subsytem during the mission.  It will handle all telemetry to and from the HASP systems.  Downlinked packets will provide timestamped readings from all the payload's sensors which help us in analyzing the current state of the payload.  RESU will also receive four uplink commands: heaters on/off and pumps on/off.  These commands will be sent at our discretion which will allow us to manage our collection systems at any given point during the flight based on environmental and component temperatures. 
