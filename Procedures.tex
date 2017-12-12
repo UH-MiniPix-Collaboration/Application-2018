@@ -1,19 +1,30 @@
 \section{Procedures}
 \label{sec:Procedures}
 
-%\subsection{Simulations}
+\subsection{Decontamination and Blah}
+\label{subsec:Decontamination}
 
+\subsubsection{Objectives:}
+Sanitization procedures are critical. They need to be checked and verified to ensure that our samples will not become contaminated. If the samples were to become contaminated it would make any possible bacterial collection data inconsequential.
 
+\subsubsection{Sterilization Preflight:}
+The payload will be built within the confines of a class 100 clean hood that is located inside of a class 10,000 clean room. Any tools that are used to construct the sampling box will be heat sterilized at \SI{120}{\celsius} for \SI{20}{\minute}. This will be followed by exposing each side of the container to germicidal UV-C (\SI{254}{\nano\meter}) light for \SI{20}{\minute} and then soaked overnight in 91\% isopropyl alcohol to denature proteins in any possible sources of contaminating bacteria. This sterilization method destroys close to 100\% of all organisms and their endospores. To sterilize parts that would otherwise be damaged by the autoclave method they will be cleaned by hand with 91\% isopropyl alcohol to kill microorganisms by denaturing proteins and dissolving the lipid membrane. Following this, the materials will be rinsed with a 95\% ethanol (v/v) solution as an extra precautionary step to ensure complete decontamination. After all parts have dried, the sampling container will be constructed and placed in a gas-porous sterilization pouch and exposed to ethylene oxide (EO) at a concentration of 0.45-0.65 \SIrange{0.45}{0.65}{\milli\gram\per\meter\cubed} at \SI{55}{\celsius} and 30-50 \% RH for \SI{4}{\hour} to annihilate any spores and to provide another form of anti-bacterial treatment. The SMITH payload for HASP 2011 was processed in a similar fashion. Two identical chambers will be created to have a sampling container and a control container that will remain closed during the flight. This will provide a means to determine if contamination occurs. While the test sampling containers are under construction, the sterilization procedures are to be followed while under a sterilized hood, where samples will be collected to verify their contamination free status. Once the final HASP integration is ready for sampling and control containers are produced, both chambers will be sterilized and sealed. After the containers are integrated into the rest of the payload, the entire device will be placed in an autoclave bag for transportation.
 
-%\subsubsection{SolidWorks}
-%Shear and stress test simulations for turbulence and impact, using SolidWorks~\cite{SolidWorks} software, will be conducted to confirm that the mounting bolts and brackets can support the payload and withstand any forces they may be subject to during flight.
+\subsubsection{Sterilization Post flight:}
+Before payload descent, a halt sampling command will be issued to the payload via uplink. The
+halt sampling command will seal the sampling container by shutting down the pump system and closing all solenoid valves. Each team member involved in the recovery process should where new latex gloves; cleaned with 91 \% isopropyl alcohol. The payload will remain sealed until decontamination procedures are complete and the sampling container is ready for processing. The payload will be disassembled under class 100 conditions and all tools used during this procedure will be either heat or 91 \% isopropyl alcohol sterilized. Once in the clean room, the same procedures that were performed preflight will be performed post flight. The sampling box will then be packaged in a heat sterilized plastic outer container and transported to a biological facility that will then determine the quantity of cells present.
+
+%\subsubsection{In Flight Failure:}
+%If for some reason the sampling system fails, commands can be uplinked to the control system that
+%allow for subsystem resets. If the temperature falls below component operating conditions, the heater associated to that particular subsystem will automatically turn on until operating conditions are restored and the system is operational. Although unlikely, if downlinked data shows extreme overheating or any sort of abnormality that could result in damage to HASP or other payloads, we will shut down all systems through the discrete command provided by HASP.
 
 \subsection{Testing}
 
 \subsubsection{Vacuum Chamber}
 There will be an initial testing phase that will include each component that will draw or supply power/current. During this phase, each component will receive power and transmit data to ascertain proper functionality. Communication will be tested by sending commands to the system and receiving status updates in return. In addition, to testing proper functioning of the pumps and solenoid valves, the clean box will be tested to ensure sanitation procedures are successful and verify that the materials inside the bottles within the clean box remain unfrozen. This initial phase is to be followed by an integration of components into their respective subsystems. Each subsystem will be tested to ensure functionality within itself and confirm actual power consumption and current drawn at various voltages. The subsystems will be thermally vacuum tested to determine thermal stability and general functionality at each phase of the flight (ascension, float, descent) for a total of 24 hours. Finally, a complete integration will complete the payload. The complete integration will be tested in the same manner as the subsystems to establish a fully functioning payload. Once this final phase is complete, the payload will be sealed after it has undergone sanitation procedures.
 
-\subsubsection{Self Integration}
+\subsection{Integration Procedures}
+\subsubsection{UH Integration}
 For Astrobiology, we will try to determine the airflow through the system under normal ground level conditions and float conditions with as much precision as possible.  We will run two pumps and we will monitor the power consumption of the system as well. The pumps, along with the temperature, humidity and pressure sensors and tubing will undergo extensive thermal vacuum testing in the range of \SIrange{-3}{25}{\celsius}, with a pressure range of \SIrange{0}{10}{\milli\bar}. The vacuum chamber tests will run for approximately \SIrange{8}{15}{\hour}, to replicate conditions from the previous flights. In the past~\cite{SORA}, the pumps were subjected to a temperature range of \SIrange{-30}{50}{\celsius} during integration and ran again for \SI{8}{\hour} afterwards and prior to flight. The pumps have proven to function in extremem environments without an issues. 
 
 There will be several clean boxes used during the testing procedures to ensure stability of the materials and agarose solution under flight conditions. The multiple boxes will also allow for contamination and leak testing. Once the aforementioned actuator/pump/solenoid combination has been assembled, the sealed and sanitized clean box will be connected via the tubing from the pumps. This new assembly will be vacuum chamber tested under the same pressure and temperature conditions that are to be expected throughout the flight. 
@@ -29,16 +40,12 @@ In near vacuum environments, electrical devices under continuous operation tend 
 \subsubsection{HASP Integration}
 The integration team, which consists of all team members to date, will arrive at the integration site approximately \numrange{1}{2} days before the scheduled testd. The first step of the integration will be to attach the payload to the HASP plate. Following attachment, it will be verified that the payload receives power from the HASP EDAC connector and is successfully sending and receiving operation commands from the ground. Our results for bacteria collection rely heavily on a very little to no contamination risk setting pre and post flight, therefore, we think it best that the sampling system remain powered down until float altitude has been reached. We can offer a proxy for the integration testing in the form of a separate actuator and pump just to confirm that commands are being received from the ground. Once everything is determined to be in perfect working order the entire system will be shut down in preparation for the actual flight.
 
-\subsection{Post Integration Operations}
+\subsubsection{Post Integration Operations}
 
-\subsubsection{Astrobiology}
-
-
-\subsubsection{Radiation}
-
+After integration, the astrobiology system will be prepared for flight.  Any issues or improvements needed will be done in the months before flight. For the rest of the systems, we will do a final check and have the payload ready for shipment.  The payload will be shipped in a crate to New Mexico accordingly.
 
 \subsection{Flight Operations}
-Our systems are all automated, therefore the only flight operations to consider are to turn on the pumps once float conditions are achieved. The payload will be monitored via analog downlinking to determine the appropriate time to switch the pumps on. 
+Our systems are all automated, therefore the only flight operations to consider are to turn on the pumps once float conditions are achieved. The payload will be monitored via analog and serial  downlinking to determine the appropriate time to turn on all systems. 
 
 \subsection{Post-Flight Operations}
 Once the flight is complete the team will be on site to collect the Clean Box/solenoid/pump assembly, the Radiation/UV data collection assembly, and the second RaspberryPi responsible for storing all environmental data. Everything else can be shipped back to our facilities at a later date.  
