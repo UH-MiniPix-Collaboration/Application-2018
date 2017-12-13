@@ -24,7 +24,7 @@ There will be an initial testing phase that will include each component that wil
 
 \subsection{Integration Procedures}
 \subsubsection{UH Integration}
-For Astrobiology, we will try to determine the airflow through the system under normal ground level conditions and float conditions with as much precision as possible.  We will run two pumps and we will monitor the power consumption of the system as well. The pumps, along with the temperature, humidity and pressure sensors and tubing will undergo extensive thermal vacuum testing in the range of \SIrange{-3}{25}{\celsius}, with a pressure range of \SIrange{0}{10}{\milli\bar}. The vacuum chamber tests will run for approximately \SIrange{8}{15}{\hour}, to replicate conditions from the previous flights. In the past~\cite{SORA}, the pumps were subjected to a temperature range of \SIrange{-30}{50}{\celsius} during integration and ran again for \SI{8}{\hour} afterwards and prior to flight. The pumps have proven to function in extremem environments without an issues. 
+For Astrobiology, we will try to determine the airflow through the system under normal ground level conditions and float conditions with as much precision as possible.  We will run two pumps and we will monitor the power consumption of the system as well. The pumps, along with the temperature, humidity and pressure sensors and tubing will undergo extensive thermal vacuum testing in the range of \SIrange{-3}{25}{\celsius}, with a pressure range of \SIrange{0}{10}{\milli\bar}. The vacuum chamber tests will run for approximately \SIrange{8}{15}{\hour}, to replicate conditions from the previous flights. In the past~\cite{SORA}, the pumps were subjected to a temperature range of \SIrange{-30}{50}{\celsius} during integration and ran again for \SI{8}{\hour} afterwards and prior to flight. The pumps have proven to function in extreme environments without an issues. 
 
 There will be several clean boxes used during the testing procedures to ensure stability of the materials and agarose solution under flight conditions. The multiple boxes will also allow for contamination and leak testing. Once the aforementioned actuator/pump/solenoid combination has been assembled, the sealed and sanitized clean box will be connected via the tubing from the pumps. This new assembly will be vacuum chamber tested under the same pressure and temperature conditions that are to be expected throughout the flight. 
 
@@ -32,7 +32,7 @@ RESU will once again undergo rigorous testing in order to ensure proper operatio
 
 When the actuator/pumps/solenoid/clean box assembly and the environmental package assembly have undergone separate and complete flight simulations in the vacuum chamber, the two will be combined to form a more complete assembly. This new assembly will be vacuum chamber tested. 
 
-In near vacuum environments, electrical devices under continuous operation tend to build up heat as there is practically no thermal convection. Based off of the results from the last mission, we have decided the aluminum heat sink is the best option~\cite{SORA}. Once the MiniPIX has been tested separately it will be added to the assembly to make a final assembly that will be vacuum tested. The MiniPIX will be integrated with the Raspberry Pi via USB. Using the Pixet software, we will test known sources to measure the energy levels and particle flux to ensure that the MiniPIX has been properly calibrated.
+In near vacuum environments, electrical devices under continuous operation tend to build up heat as there is practically no thermal convection. Based off of the results from the last mission, we have decided the aluminum heat sink is the best option~\cite{SORA}. Once the MiniPIX has been tested separately it will be added to the assembly to make a final assembly that will be vacuum tested. The MiniPIX will be integrated with the RP3 via USB. Using the Pixet software, we will test known sources to measure the energy levels and particle flux to ensure that the MiniPIX has been properly calibrated.
     
 %Our detailed preliminary testing plan is described in \textbf{appendix B (make sure this stays consistent)}.  
 
@@ -47,7 +47,7 @@ After integration, the astrobiology system will be prepared for flight.  Any iss
 Our systems are all automated, therefore the only flight operations to consider are to turn on the pumps once float conditions are achieved. The payload will be monitored via analog and serial  downlinking to determine the appropriate time to turn on all systems. 
 
 \subsection{Post-Flight Operations}
-Once the flight is complete the team will be on site to collect the Clean Box/solenoid/pump assembly, the Radiation data collection assembly, and the second Raspberry Pi responsible for storing all environmental data. Everything else can be shipped back to our facilities at a later date.  
+Once the flight is complete the team will be on site to collect the Clean Box/solenoid/pump assembly, the Radiation data collection assembly, and the second RP3 responsible for storing all environmental data. Everything else can be shipped back to our facilities at a later date.  
 
 
 
