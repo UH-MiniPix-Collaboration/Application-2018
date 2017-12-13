@@ -1,103 +1,23 @@
 %\clearpage
-\subsection{RESU Methods}
+\subsection{Electronics System Design}
 \label{sec:RESU}
-
 
 \subsubsection{Overview}
 
-RESU will again take charge of many components that work in tandem to accurately describe the flight mission through data.  As mentioned briefly before, the sensors will transmit their readings to the RP3 via serial USB.  The RP3 would then take those strings and write them to a CSV file that corresponded to that sensor.  The data strings are timestamped using the Arduino's RTC sensor.  The biggest challenge will be keeping the power consumption within bounds while running all three experiments
-in our previous mission with the addition of another pump.  But now with a more developed version of RESU, this flight will once again test the limits of our prototypes.
+The RESUs primary purpose during the flight will be to monitor environmental conditions and control the astrobiology systems. It will monitor temperature of the various subsystems and the humidity and pressure of the environment throughout the flight. All recorded data will continuously be written to an SD card mounted on a shield on top of the Arduino. It will also accept discrete commands from the HASP systems to turn the astrobiology collection system on and off.
 
 \subsubsection{The Sensors}
 
-Each sensor will be digital or analog in nature.  Digital sensors typically provide digital filtering within themselves and are temperature compensated for the purpose of this mission. 
-   
-To mitigate the risk of component failure due to overheating or a decrease in temperature, the temperature sensors will be placed on the pumps, electronics bay, and MiniPIX, helping determine if the heaters need to be switched on or off.  In the case of overheating, the sensors would be used to determine whether the pumps must be shut off.  These sensors operate in the \SIrange{-40}{125}{\celsius} range and draw less than \SI{0.5}{\micro\ampere} of current, each.  Temperature readings will be recorded every \SIrange{3}{4}{\second}.
+Our payload will utilize eight thermistors to measure temperature at various points in our payload. The decision to use thermistors was based primarily on the performance of the analog temperature sensors during our 2017 flight, during which several of those sensors failed. Thermistors are able to accurately measure temperature in the range \SIrange{-55}{125} and should therefore be adequate for the conditions in the stratosphere. Pressure will be recorded from two identical digital pressure sensors in order to ensure accuracy and should be able to record accurately in the range \SIrange{0}{14000}{\milli\bara}. Finally, humidity will be measured from a basic analog humidity sensor. All sensor data will be UTC timestamped via the onboard Real Time Clock and recorded to the SD card.
 
-A pressure sensor will be placed inside the electronics container to monitor the pressure levels within the payload.  The sensor operates in the \SIrange{0}{14}{\bara} range, within a temperature range of \SIrange{-40}{85}{\celsius}, and draws \SI{1}{\micro\ampere} of current.  The pressure will be measured in the \SIrange{0}{14000}{\milli\bara} range, at a resolution of \SI{1}{\milli\bara} every \SIrange{3}{4}{\second}.
-
-One humidity sensor will be placed inside at the electronics plate.  The sensor operates in a range of \SIrange{0}{100}{\percent} relative humidity and draws \SI{200}{\micro\ampere} of current.  Humidity will be measured at a resolution of \SI{5}{\percent} every \SIrange{3}{4}{\second}.
-
-The Real-Time Clocks (RTC) records time in a $HH$:$MM$:$SS$ and $MM/DD/YYYY$ format.  The sensor operates in the \SIrange{-40}{85}{\celsius} range and consumes \SIrange{400}{500}{\micro\ampere} of current.  The timestamps  will be used for log when a specific data point is collected by each sensor in the Arduino.  The RP3  uses an RTC to help log for both the temperatures of the MiniPIX and RP3 respectfully.
-
-The inertial measuring unit (IMU) is a combination sensor that reports orientation information.  It operates in a \SIrange{-40}{125}{\celsius} range and consumes \SI{450}{\micro\ampere}, \SI{3.2}{\milli\ampere}, and \SI{280}{\micro\ampere} of current, for the accelerometer, gyroscope, and magnetometer, respectively.  It uses the best qualities of each sensor to compliment the flaws in data acquisition over long time frames.  Data will be collected every \SIrange{5}{7}{\second}.
- 
  %UVC radiation was measured by three identical sensors.  They supported light ranging from \SIrange{210}{380}{\watt\per\square\meter} and were located outside the roof of the payload.  These sensors were analog so their readings were voltages induced by incident rays on the surface of each sensor. To stabilize the voltage readings from each sensor, a \SI{3300}{\micro\farad} capacitor was placed across the ground and analog out pins of the sensor.  Data was collected every \SIrange{3}{4}{\second}.
 
 
 \subsubsection{Powering It All Up}
 
-In order to stay within the power constraints, a robust power supply will need to  handle all the components of the payload.  The power supply we will be using is the PPM-DC-ATX-P by WinSystems INC.  It offered the desired number of \SI{+5}{\volt} and \SI{+12}{\volt} outputs needed to power the payload's electronics.  This power supply could effectively take \SI{+30}{\volt} and step it down to two \SI{+12}{\volt} and two \SI{+5 }{\volt} outputs.  One of the \SI{+12}{\volt} outputs goes to the Arduino since it can step down to the appropriate voltages internally while the other goes to a PWM motor for the solenoid.  One of the \SI{+5 }{\volt} outputs powers two analog sensors that will be sent to HASP through the EDAC connection (more on that in the next sections).  The remaining \SI{+5 }{\volt} output is converted to a USB power cable for the RP3.  The power supply also has four ground outputs that will be used by each respective component. 
-
-\subsubsection{Interfacing With HASP: Serial Uplink and Downlink}
-
-When a command is received from the mission control team, it will be transmitted straight through the DB9 connection into the RPI3 which will verify its content and perform the appropriate action defined in Table~\ref{tab:All-Commands}. 
-
-\begin{table}[!ht]
-\centering
-\caption{Table of All Uplink Command} 
-\label{tab:All-Commands}
-\bigskip
-\begin{tabular}{|c|c|c|c|}
-\hline
-\multicolumn{1}{|c|}{\bfseries Command} & \multicolumn{1}{c|}{\bfseries HEX Uplink Command} & \multicolumn{1}{c|}{\bfseries HEX Uplink Argument}\\
-\hline
-    Begin Acquisitions 		& 0x01	 & N/A			    	    \\ \hline 
-    Stop Acquisitions 		& 0x02	 & N/A			            \\ \hline
-    Set Shutter Time		& 0x03   & Shutter Time in seconds (1-255)  \\ \hline %two pumps now
-    Change Acquisition Mode    	& 0x04 	 & HEX Mode Identifier 	            \\ \hline
-    Device Reset		& 0x05 	 & N/A				    \\ \hline
-    
-\end{tabular}
-\medskip
-\end{table}
-
-\begin{table}[!ht]
-\centering
-\caption{Table of Acquisition Modes} 
-\label{tab:Acq-Commands}
-\bigskip
-\begin{tabular}{|c|c|c|}
-\hline
-\multicolumn{1}{|c|}{\bfseries Acquisition Mode} & \multicolumn{1}{c|}{\bfseries Hex Identifier} & \multicolumn{1}{c|}{\bfseries Description}\\
-\hline
-    Automatic Shutter Time	& 0x01   & Shutter time determined automatically based on particle flux   \\ \hline %two pumps now
-    Fixed Shutter Time    	& 0x02 	 & Shutter time fixed to set shutter time 	     		  \\ \hline
-    Counting Mode    		& 0x03 	 & Configure MiniPIX to measure counts on the detector only 	  \\ \hline
-    ToT Mode			& 0x04	 & Configure MiniPIX to measure time over threshold values	  \\ \hline
-    ToA Mode			& 0x05 	 & Configure MiniPIX to measure time of arrival 	     	  \\ \hline
-\end{tabular}
-\medskip
-\end{table}
+In order to stay within the power constraints, a robust power supply will need to  handle all the components of the payload.  The power supply we will be using is the PPM-DC-ATX-P by WinSystems INC.  It offers the desired number of \SI{+5}{\volt} and \SI{+12}{\volt} outputs needed to power the payload's electronics.  This power supply could effectively take \SI{+30}{\volt} and step it down to two \SI{+12}{\volt} and two \SI{+5 }{\volt} outputs.  One of the \SI{+12}{\volt} outputs goes to the Arduino since it can step down to the appropriate voltages internally while the other goes to a PWM motor for the solenoid.  One of the \SI{+5 }{\volt} outputs powers two analog sensors that will be sent to HASP through the EDAC connection (more on that in the next sections).  The remaining \SI{+5 }{\volt} output is converted to a USB power cable for the RP3.  The power supply also has four ground outputs that will be used by each respective component. 
 
 
-\subsubsection{Interfacing with HASP: EDAC and DB9 Connections}
-
-Our wiring will not change much from the last mission~\cite{SORA}.  From the EDAC pins, we will join two of the \SI{30}{\volt} leads together in parallel to supply power to the central power supply.  Likewise, two of the ground leads will be used to ground the supply.  A pair of \SI{30}{\volt} and ground leads will also be used as input to the relay circuit in order to supply power to the pumps which require at least \SI{24}{\volt} to operate.  The last pair of \SI{30}{\volt} and ground leads will be used as input to the punch and hold circuit mentioned in the previous section to power the solenoids which require at least \SI{20}{\volt} to operate.  Two temperature sensors will be connected by both analog leads from the EDAC connection.  The corresponding ground pins will be used to ground them.  These two sensors will be placed on the pumps - one sensor per pump.  
-
-We will use discrete commands in this mission.  Two of the commands will be used to turn the astrobioly system on and off.  This is only in case of emergency if we notice that the system is not responding to our serial commands.  The other two discrete channels will be used to turn on and off the power of RESU in case that we notice an issue.
-
-\begin{table}[!ht]
-\centering
-\caption{Table of all discrete commands to be used during flight} 
-\label{tab:Dis-Commands}
-\bigskip
-\begin{tabular}{|c|c|c|c|}
-\hline
-\multicolumn{1}{|c|}{\bfseries Command} & \multicolumn{1}{c|}{\bfseries Purpose} &  \multicolumn{1}{c|}{\bfseries EDAC Pin} & \multicolumn{1}{c|}{\bfseries Description} \\
-\hline
-    Discrete 1     	& Astro. System ON 	& f	 & Initiates the pumps and collection systems   \\ \hline 
-    Discrete 2    	& Astro. System OFF 	& n	 &  Shuts down the pumps and causes collection systems to retract  \\ \hline
-    Discrete 3  	& RESU On 	& h	 & Powers up RESU   \\ \hline 
-    Discrete 4 		& RESU OFF 	& p	 & Shuts down RESU   \\ \hline
-\end{tabular}
-\medskip
-\end{table}
-
-
-
-
-As for the DB9 connection, we will again use it to send serial uplink and downlink commands to better our flight operation, as well as to ensure the best possible experiment takes place while at float.  The Tx and Rx leads will be connected to the Arduino which then reads in the serial signal for reading and writing.  Each uplink command will be verified by a state machine that processes each string of \num{32} bits.  A Maxim 232 integrated circuit will be used in between the transmission and receiving leads to and from the Arduino which handles the input of the serial communication, ensuring proper integration with HASP voltages and Arduino voltages.  The baud rate for serial communication will be set to 4800 bits per second ($bits/sec$). 
 %Listing~\ref{Downlinks} is a sample downlink data packet received during our previous flight.
 
 %\lstset{basicstyle=\small, numbers=left, xleftmargin=2em, frame=tb, label = Downlinks, framexleftmargin=1.5em}
