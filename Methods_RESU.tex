@@ -29,28 +29,47 @@ The inertial measuring unit (IMU) is a combination sensor that reports orientati
 
 In order to stay within the power constraints, a robust power supply will need to  handle all the components of the payload.  The power supply we will be using is the PPM-DC-ATX-P by WinSystems INC.  It offered the desired number of \SI{+5}{\volt} and \SI{+12}{\volt} outputs needed to power the payload's electronics.  This power supply could effectively take \SI{+30}{\volt} and step it down to two \SI{+12}{\volt} and two \SI{+5 }{\volt} outputs.  One of the \SI{+12}{\volt} outputs goes to the Arduino since it can step down to the appropriate voltages internally while the other goes to a PWM motor for the solenoid.  One of the \SI{+5 }{\volt} outputs powers two analog sensors that will be sent to HASP through the EDAC connection (more on that in the next sections).  The remaining \SI{+5 }{\volt} output is converted to a USB power cable for the RP3.  The power supply also has four ground outputs that will be used by each respective component. 
 
-\subsubsection{Uplink Commands: Relay System for Pumps and Heaters}
+\subsubsection{Interfacing With HASP: Serial Uplink and Downlink}
 
-When a command is received from the mission control team, it will be transmitted straight through the DB9 connection into the Arduino which will either accept or decline it based on our state machine.  If accepted, the state machine would then interpret which hexadecimal command was sent and would then send a logical HIGH pulse to the relay which subsequently turns a system on or off.  Table~\ref{tab:All-Commands} lists all the commands to be used during flight.
+When a command is received from the mission control team, it will be transmitted straight through the DB9 connection into the RPI3 which will verify its content and perform the appropriate action defined in Table~\ref{tab:All-Commands}. 
 
 \begin{table}[!ht]
 \centering
-\caption{Table of All Uplink Commands Used During Flight} 
+\caption{Table of All Uplink Command} 
 \label{tab:All-Commands}
 \bigskip
 \begin{tabular}{|c|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{\bfseries Command} & \multicolumn{1}{c|}{\bfseries HEX Uplink Command} &  \multicolumn{1}{c|}{\bfseries ASCII Uplink Command} & \multicolumn{1}{c|}{\bfseries Expected Current Consumption} \\
+\multicolumn{1}{|c|}{\bfseries Command} & \multicolumn{1}{c|}{\bfseries HEX Uplink Command} & \multicolumn{1}{c|}{\bfseries HEX Uplink Argument}\\
 \hline
-    Pumps On     	& 0x65FF 	& e	 & \SI{1.63}{\ampere}   \\ \hline %two pumps now
-    Pumps Off    	& 0x71FF 	& q	 & \SI{0.29}{\ampere}    \\ \hline
-    Heaters On  	& 0x68FF 	& h	 & \SI{0.65}{\ampere}    \\ \hline %two heaters now
-    Heaters Off 	& 0x76FF 	& v	 & \SI{0.29}{\ampere}    \\ \hline
+    Begin Acquisitions 		& 0x01	 & N/A			    	    \\ \hline 
+    Stop Acquisitions 		& 0x02	 & N/A			            \\ \hline
+    Set Shutter Time		& 0x03   & Shutter Time in seconds (1-255)  \\ \hline %two pumps now
+    Change Acquisition Mode    	& 0x04 	 & HEX Mode Identifier 	            \\ \hline
+    Device Reset		& 0x05 	 & N/A				    \\ \hline
+    
 \end{tabular}
 \medskip
 \end{table}
 
-Serial uplink commands allow for 4-byte hexadecimal strings.  Since none of our processes require more than a single parameter, we elected to leave the second parameter as 0xFF.  Note that every ``disengage'' results in our payload returning to nominal current which is about \SI{0.29}{\ampere}.  The ``pumps on'' command executed a sequence of events. After receiving the command, two normally closed solenoids would open and then after one second the pumps would begin the collection process.  The solenoids does have an initial peak current of \SI{1.2}{\ampere} each and to suppress it, a punch-and-hold circuit will be implemented using a Pololu G2 High Power Motor Driver.  It serves the purpose of reducing the current consumption from the solenoid to stay within the power budget.  The heaters are there to make sure the pumps can turn on in the extreme cold temperatures.  
+\begin{table}[!ht]
+\centering
+\caption{Table of Acquisition Modes} 
+\label{tab:Acq-Commands}
+\bigskip
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\bfseries Acquisition Mode} & \multicolumn{1}{c|}{\bfseries Hex Identifier} & \multicolumn{1}{c|}{\bfseries Description}\\
+\hline
+    Automatic Shutter Time	& 0x01   & Shutter time determined automatically based on particle flux   \\ \hline %two pumps now
+    Fixed Shutter Time    	& 0x02 	 & Shutter time fixed to set shutter time 	     		  \\ \hline
+    Counting Mode    		& 0x03 	 & Configure MiniPIX to measure counts on the detector only 	  \\ \hline
+    ToT Mode			& 0x04	 & Configure MiniPIX to measure time over threshold values	  \\ \hline
+    ToA Mode			& 0x05 	 & Configure MiniPIX to measure time of arrival 	     	  \\ \hline
+\end{tabular}
+\medskip
+\end{table}
+
 
 \subsubsection{Interfacing with HASP: EDAC and DB9 Connections}
 
