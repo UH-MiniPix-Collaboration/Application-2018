@@ -78,50 +78,51 @@ We will use discrete commands in this mission.  Two of the commands will be used
 
 
 
-As for the DB9 connection, we will again use it to send serial uplink and downlink commands to better our flight operation, as well as to ensure the best possible experiment takes place while at float.  The Tx and Rx leads will be connected to the Arduino which then reads in the serial signal for reading and writing.  Each uplink command will be verified by a state machine that processes each string of \num{32} bits.  A Maxim 232 integrated circuit will be used in between the transmission and receiving leads to and from the Arduino which handles the input of the serial communication, ensuring proper integration with HASP voltages and Arduino voltages.  The baud rate for serial communication will be set to 4800 bits per second ($bits/sec$). Listing~\ref{Downlinks} is a sample downlink data packet received during our previous flight.
+As for the DB9 connection, we will again use it to send serial uplink and downlink commands to better our flight operation, as well as to ensure the best possible experiment takes place while at float.  The Tx and Rx leads will be connected to the Arduino which then reads in the serial signal for reading and writing.  Each uplink command will be verified by a state machine that processes each string of \num{32} bits.  A Maxim 232 integrated circuit will be used in between the transmission and receiving leads to and from the Arduino which handles the input of the serial communication, ensuring proper integration with HASP voltages and Arduino voltages.  The baud rate for serial communication will be set to 4800 bits per second ($bits/sec$). 
+%Listing~\ref{Downlinks} is a sample downlink data packet received during our previous flight.
 
-\lstset{basicstyle=\small, numbers=left, xleftmargin=2em, frame=tb, label = Downlinks, framexleftmargin=1.5em}
-\begin{lstlisting}[caption = Sample of downlinked data packets ID: 15667 - 15670 from SORA 2017~\cite{SORA}.]
-...
-begin_packet
-15667,-21.05,-0.33,35.62,-1.00,0.12,0.25,-0.71,0.63,9.30,-30.25,-26.69,-60.88
-3.14,2.86,0.00,0.00,0.60,9:29:39 9/4/17
-end_packet
-begin_packet
-15668,-20.95,-0.54,35.62,0.75,0.06,-0.69,0.25,-2.00,9.67,-28.37,-28.06,-60.06
-3.80,3.33,0.00,0.00,0.60,9:29:42 9/4/17
-end_packet
-begin_packet
-15669,-21.15,-0.54,35.62,0.81,-0.06,-0.56,1.22,-2.13,9.86,-29.56,-27.75,-57.88
-1.86,2.86,0.01,0.02,0.61,9:29:45 9/4/17
-end_packet
-begin_packet
-15670,-21.15,-0.54,35.62,-1.00,0.00,0.12,-0.55,0.73,9.37,-27.37,-30.00,-58.75
-1.86,3.96,0.00,0.00,0.61,9:29:48 9/4/17
-end_packet
-...
-\end{lstlisting}
-\medskip
-
-Each packet of data will be delimited by keywords \verb|begin_packet| and \verb|end_packet| so that parsing each file be easier.  During our previous flight, these data packets were crucial status updates to the state of our payload.  We will once again use them for the same purpose to keep a close eye on our payload.
-
-Data packets will contain information about the readings from each sensor.  The first integer represents the ID of the packet.  Following the packet ID are the three temperature readings, gyroscope $x, y, z$ values, accelerometer $x, y, z$ values, magnetometer $x, y, z$ values, pressure readings, humidity readings, UV \#1, \#2, \#3 voltage readings, and finally the timestamp in $HH$:$MM$:$SS$ $MM$/$DD$/$YY$ at which the packet was written.  
-
-In addition to downlinking sensor data, we also want to downlink serial uplink commands as shown in listing \ref{Uplinks}.  
-
-\lstset{basicstyle=\small, numbers=left, frame=tb, linewidth=11.5cm, xleftmargin=.4\textwidth, label = Uplinks}
-\begin{lstlisting}[caption = Sample of received uplink commands in downlinked packets in SORA 2017~\cite{SORA}]
-...
-1
-2
-71
-FFFFFFFF
-3
-D
-A
-Received Command: 71
-...
-\end{lstlisting}
-\medskip
-
-Each line within a received uplink command represents the string of bytes that will be read by our payload.  The last line of the listing shows what command will be parsed and processed by RESU.  Table \ref{tab:All-Commands} shows all the possible commands that we are expecting to process. 
+%\lstset{basicstyle=\small, numbers=left, xleftmargin=2em, frame=tb, label = Downlinks, framexleftmargin=1.5em}
+%\begin{lstlisting}[caption = Sample of downlinked data packets ID: 15667 - 15670 from SORA 2017~\cite{SORA}.]
+%...
+%begin_packet
+%15667,-21.05,-0.33,35.62,-1.00,0.12,0.25,-0.71,0.63,9.30,-30.25,-26.69,-60.88
+%3.14,2.86,0.00,0.00,0.60,9:29:39 9/4/17
+%end_packet
+%begin_packet
+%15668,-20.95,-0.54,35.62,0.75,0.06,-0.69,0.25,-2.00,9.67,-28.37,-28.06,-60.06
+%3.80,3.33,0.00,0.00,0.60,9:29:42 9/4/17
+%end_packet
+%begin_packet
+%15669,-21.15,-0.54,35.62,0.81,-0.06,-0.56,1.22,-2.13,9.86,-29.56,-27.75,-57.88
+%1.86,2.86,0.01,0.02,0.61,9:29:45 9/4/17
+%end_packet
+%begin_packet
+%15670,-21.15,-0.54,35.62,-1.00,0.00,0.12,-0.55,0.73,9.37,-27.37,-30.00,-58.75
+%1.86,3.96,0.00,0.00,0.61,9:29:48 9/4/17
+%end_packet
+%...
+%\end{lstlisting}
+%\medskip
+%
+%Each packet of data will be delimited by keywords \verb|begin_packet| and \verb|end_packet| so that parsing each file be easier.  During our previous flight, these data packets were crucial status updates to the state of our payload.  We will once again use them for the same purpose to keep a close eye on our payload.
+%
+%Data packets will contain information about the readings from each sensor.  The first integer represents the ID of the packet.  Following the packet ID are the three temperature readings, gyroscope $x, y, z$ values, accelerometer $x, y, z$ values, magnetometer $x, y, z$ values, pressure readings, humidity readings, UV \#1, \#2, \#3 voltage readings, and finally the timestamp in $HH$:$MM$:$SS$ $MM$/$DD$/$YY$ at which the packet was written.  
+%
+%In addition to downlinking sensor data, we also want to downlink serial uplink commands as shown in listing \ref{Uplinks}.  
+%
+%\lstset{basicstyle=\small, numbers=left, frame=tb, linewidth=11.5cm, xleftmargin=.4\textwidth, label = Uplinks}
+%\begin{lstlisting}[caption = Sample of received uplink commands in downlinked packets in SORA 2017~\cite{SORA}]
+%...
+%1
+%2
+%71
+%FFFFFFFF
+%3
+%D
+%A
+%Received Command: 71
+%...
+%\end{lstlisting}
+%\medskip
+%
+%Each line within a received uplink command represents the string of bytes that will be read by our payload.  The last line of the listing shows what command will be parsed and processed by RESU.  Table \ref{tab:All-Commands} shows all the possible commands that we are expecting to process. 
