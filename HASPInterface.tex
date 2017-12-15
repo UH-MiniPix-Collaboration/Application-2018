@@ -1,7 +1,7 @@
 \section{HASP Interface}
 \label{sec:Hasp-Interface}
 
-\subsection{Interfacing With HASP: Serial Uplink and Downlink}
+\subsection{Interfacing with HASP: Serial Uplink and Downlink}
 During the duration of our flight the serial uplink commands will be used to configure the collection parameters of the MiniPIX radiation detector. When a command is received from the mission control team, it will be transmitted straight through the DB9 connection into the RPI3 through an RS232 to ttl converter. Then the monitoring script on the RPI3 will verify its content and perform the appropriate action defined in Table~\ref{tab:All-Commands}. The baud rate for serial communication will be set to 4800 bits per second ($bits/sec$). 
 
 
