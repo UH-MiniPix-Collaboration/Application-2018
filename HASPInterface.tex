@@ -66,3 +66,48 @@ We will use discrete commands in this mission.  Two of the commands will be used
 \medskip
 \end{table}
 
+\subsection{Interfacing with HASP: Serial Downkink}
+For the duration of the flight the serial downlink will be used to downlink the temperature and other various radiation statistics that will be computed directly on the RP\num{3} as data is collected. It will also be used to downlink messages regarding the status of the payload, the command uplink status and error messages. The data packets will be human readable so they can be analyzed directly as they are received from HASP. The packets will be delineated by new lines and we will use a simple one character header to differentiate between data packets and message packets. The format of the packets is still potentially subject to change but the preliminary design is outlined below.
+
+
+
+\begin{table}[!ht]
+\centering
+\caption{Data Packet Format} 
+\label{tab:DataPacket}
+\bigskip
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{1}{|c|}{\bfseries Data} & \multicolumn{1}{c|}{\bfseries Size (bytes)}\\
+\hline
+    d						& 2		\\ \hline 
+    MiniPIX Temperature 			& 6		\\ \hline
+    Dose Rate					& 6		\\ \hline %two pumps now
+    Average Counts   				& 5		\\ \hline
+    Newline					& 1		\\ \hline
+    Total Packet Size				& 20 bytes		\\ \hline
+    
+\end{tabular}
+\medskip
+\end{table}
+
+\begin{table}[!ht]
+\centering
+\caption{Message Packet Format} 
+\label{tab:DataPacket}
+\bigskip
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{1}{|c|}{\bfseries Data} & \multicolumn{1}{c|}{\bfseries Size (bytes)}\\
+\hline
+    m						& 2		\\ \hline 
+    Message Size 				& 6		\\ \hline
+    Message					& String of length Message Size		\\ \hline %two pumps now
+    Newline					& 1		\\ \hline
+    Total Packet Size				& Variable		\\ \hline
+    
+\end{tabular}
+\medskip
+\end{table}
+
+
