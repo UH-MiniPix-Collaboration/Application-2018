@@ -7,7 +7,7 @@
 %\label{budget}
 %	\begin{tabular}{|c|c|c|c|c|c|}\hline
 %	\caption{Power and weight budget for SORA 2.0}
-%	Component & Voltage (VDC) & Current (mA) & Duty Cycle (\%) & Power (mW) & Weight (g)\\ \hline
+%	Component & Voltage (VDC) & Peak Current (mA) & Duty Cycle (\%) & Power (mW) & Weight (g)\\ \hline
 %	30 to 12 V DC/DC Converter & 30 &  & 100 & NA & NA \\ \hline
 %	Polulu Driver & 30 &  & 100 & NA & NA \\ \hline
 %	Polulu Driver & 30 &  & 100 & NA & NA \\ \hline
@@ -37,7 +37,7 @@
 %	\end{tabular}
 %\end{table}
 
-In order to stay within the power constraints, a robust power supply will need to  handle all the components of the payload.  The power supply we will be using is the same PPM-DC-ATX-P by WinSystems INC that we used on our first flight~\cite{SORA}.  During our last flight it operated flawlessly and powered our payload throughout the whole mission.  It offers the desired number of \SI{+5}{\volt} and \SI{+12}{\volt} outputs needed to power the payload's electronics.  This power supply effectively takes \SI{+30}{\volt} and steps it down to two \SI{+12}{\volt} and two \SI{+5 }{\volt} outputs.  One of the \SI{+12}{\volt} outputs goes to the Arduino since it can step down to the appropriate voltages internally while the other goes to a PWM motor for the solenoid.  One of the \SI{+5 }{\volt} outputs powers two analog sensors that will be sent to HASP through the EDAC connection (more on that in the next sections).  The remaining \SI{+5 }{\volt} output is converted to a USB power cable for the RP3.  The power supply also has four ground outputs that will be used by each respective component. 
+In order to stay within the power constraints, a robust power supply will need to  handle all the components of the payload.  The power supply we will be using is the same PPM-DC-ATX-P by WinSystems INC that we used on our first flight~\cite{SORA}.  During our last flight it operated flawlessly and powered our payload throughout the whole mission.  It offers the desired number of \SI{+5}{\volt} and \SI{+12}{\volt} outputs needed to power the payload's electronics.  This power supply effectively takes \SI{+30}{\volt} and steps it down to two \SI{+12}{\volt} and two \SI{+5 }{\volt} outputs.  One of the \SI{+12}{\volt} outputs goes to the Arduino since it can step down to the appropriate voltages internally while the other goes to a PWM motor for the solenoid.  One of the \SI{+5 }{\volt} outputs powers two analog sensors that will be sent to HASP through the EDAC connection (more on that in the next sections).  The Radiation subsystem will be powered by batteries for the duration of the flight (see Appendix A).  The power supply also has four ground outputs that will be used by each respective component. 
 \begin{table}[H]
 \centering
 \caption{Power and weight budget for SORA 2.0} 
@@ -45,14 +45,14 @@ In order to stay within the power constraints, a robust power supply will need t
 \bigskip
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{\bfseries Component} & \multicolumn{1}{c|}{\bfseries Voltage (VDC)} &  \multicolumn{1}{c|}{\bfseries Current (mA)} & \multicolumn{1}{c|}{\bfseries Duty Cycle (\%)} & \multicolumn{1}{c|}{\bfseries Power (mW)} & \multicolumn{1}{c|}{\bfseries Weight (g)} \\
+\multicolumn{1}{|c|}{\bfseries Component} & \multicolumn{1}{c|}{\bfseries Voltage (VDC)} &  \multicolumn{1}{c|}{\bfseries Peak Current (mA)} & \multicolumn{1}{c|}{\bfseries Duty Cycle (\%)} & \multicolumn{1}{c|}{\bfseries Power (mW)} & \multicolumn{1}{c|}{\bfseries Weight (g)} \\
 \hline
     30 to 12 V DC/DC Converter & 30 & 1500 & 100 & 45000 & 10 \\ \hline
 	%Polulu Driver & 30 & 1000 & CAL & CAL & 1 \\ \hline
 	%Polulu Driver & 30 & 1000 & CAL & CAL & 1 \\ \hline
 	RESU and MiniPIX~\ref{tab:Sensors} & 12 & 290 & 100 & 3480 & 15 \\ \hline
-	Pump 1 Heater with driver & 12 & 180 & 40 & 2160 & 2 \\ \hline
-	Pump 2 Heater with driver & 12 & 180 & 40 & 2160 & 2 \\ \hline
+	%Pump 1 Heater with driver & 12 & 180 & 40 & 2160 & 2 \\ \hline
+	%Pump 2 Heater with driver & 12 & 180 & 40 & 2160 & 2 \\ \hline
 	Pump 1 w/ Solenoid & 24 & 670 & 80 & 16080 & 1800 \\ \hline
 	Pump 2 w/ Solenoid & 24 & 670 & 80 & 16080 & 1800 \\ \hline
 	%Solenoid 1 & 12 & 241.67 & 50 & 2900.04 & 5 \\ \hline
@@ -70,7 +70,7 @@ In order to stay within the power constraints, a robust power supply will need t
 	%BNO 6055 & 3.3 & 0.1 & 100 & 0.33 & 0.005 \\ \hline
 	Clean Box & N/A & N/A & N/A & N/A & 10000 \\ \hline
 	Structure w/ bolts & N/A & N/A & N/A & N/A & 5000 \\ \hline
-	Total & 30 & 2.1 (peak) & 100 & 45000 & 18764 \\ \hline
+	Total & 30 & 1.74 (peak) & 100 & 45000 & 18764 \\ \hline
 \end{tabular}
 \medskip
 \end{table}
